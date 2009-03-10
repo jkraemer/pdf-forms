@@ -69,15 +69,15 @@ module PdfForms
     end
     
     FOOTER =<<-EOFOOTER
-    ]
-    endobj
-    trailer
-    <<
-    /Root 1 0 R
+]
+endobj
+trailer
+<<
+/Root 1 0 R
 
-    >>
-    %%EOF
-    EOFOOTER
+>>
+%%EOF
+EOFOOTER
     
     def footer
       FOOTER
