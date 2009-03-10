@@ -8,15 +8,31 @@ Fill out PDF forms with pdftk (http://www.accesspdf.com/pdftk/).
 
 == EXAMPLE:
 
+=== FDF creation
 
+  fdf = PdfForms::Fdf.new :key => 'value', :other_key => 'other value'
+  # use to_fdf if you just want the fdf data, without writing it to a file
+  puts fdf.to_fdf
+  # write fdf file
+  fdf.save_to 'path/to/file.fdf'
+
+=== Fill out PDF forms with pdftk
+
+First get pdftk from http://www.accesspdf.com/pdftk/ and install it.
+
+  # adjust the pdftk path to suit your pdftk installation
+  pdftk = PdfForms::PdftkWrapper.new '/usr/local/bin/pdftk'
+  # take form.pdf, set the 'foo' field to 'bar' and save the document to myform.pdf
+  pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
+  
 
 == INSTALL:
 
-$ sudo gem install jkraemer-pdf-forms
+  $ sudo gem install jkraemer-pdf-forms
 
 == CODE:
 
-$ git clone http://github.com/jkraemer/pdf-forms.git
+  $ git clone http://github.com/jkraemer/pdf-forms.git
 
 == Prior Art
 
