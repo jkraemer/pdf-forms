@@ -9,11 +9,11 @@ Gem::Specification.new do |s|
   s.date = %q{2009-03-10}
   s.description = %q{Fill out PDF forms with pdftk (http://www.accesspdf.com/pdftk/).}
   s.email = %q{jk@jkraemer.net}
-  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
-  s.files = ["History.txt", "Manifest.txt", "README.txt", "Rakefile", "lib/pdf_forms.rb", "lib/pdf_forms/fdf.rb", "lib/pdf_forms/pdftk_wrapper.rb", "test/test_helper.rb", "test/test_fdf.rb"]
+  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.rdoc"]
+  s.files = ["History.txt", "Manifest.txt", "README.rdoc", "Rakefile", "lib/pdf_forms.rb", "lib/pdf_forms/fdf.rb", "lib/pdf_forms/pdftk_wrapper.rb", "test/test_helper.rb", "test/test_fdf.rb"]
   s.has_rdoc = true
-  s.homepage = %q{  http://github.com/jkraemer/pdf_forms/}
-  s.rdoc_options = ["--main", "README.txt"]
+  s.homepage = %q{  http://github.com/jkraemer/pdf-forms/}
+  s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{pdf-forms}
   s.rubygems_version = %q{1.3.1}
