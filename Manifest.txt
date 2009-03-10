@@ -1,6 +1,6 @@
 History.txt
 Manifest.txt
-README.txt
+README.rdoc
 Rakefile
 lib/pdf_forms.rb
 lib/pdf_forms/fdf.rb
