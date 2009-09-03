@@ -57,7 +57,9 @@ module PdfForms
     end
 
     def field(key, value)
-      "<< /T (%s) /V (%s) >>\n" % [key, quote(value)]
+      "<</T(#{key})/V" +
+        (Array === value ? "[#{value.map{ |v|"(#{quote(v)})" }.join}]" : "(#{quote(value)})") +
+        ">>\n"
     end
     
     def quote(value)
