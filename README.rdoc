@@ -16,14 +16,19 @@ Fill out PDF forms with pdftk (http://www.accesspdf.com/pdftk/).
   # write fdf file
   fdf.save_to 'path/to/file.fdf'
 
-=== Fill out PDF forms with pdftk
+=== Query form fields and fill out PDF forms with pdftk
 
 First get pdftk from http://www.accesspdf.com/pdftk/ and install it.
 
   # adjust the pdftk path to suit your pdftk installation
-  pdftk = PdfForms::PdftkWrapper.new '/usr/local/bin/pdftk'
+  pdftk = PdfForms.new('/usr/local/bin/pdftk')
+  
+  # find out the field names that are present in form.pdf
+  pdftk.get_field_names 'path/to/form.pdf'
+  
   # take form.pdf, set the 'foo' field to 'bar' and save the document to myform.pdf
   pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
+  
   
 
 == INSTALL:

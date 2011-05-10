@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class FdfTest < Test::Unit::TestCase
   def test_fdf_generation
     fdf = PdfForms::Fdf.new :field1 => 'fieldvalue1', :other_field => 'some other value'

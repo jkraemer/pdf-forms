@@ -1,3 +1,7 @@
+== 0.3.0 2011-05-10
+
+* new function to get the form field names present in a given PDF.
+
 == 0.2.0 2009-09-03
 
 * Add support for multi-valued fields. Just use an Array containing the values to be selected.

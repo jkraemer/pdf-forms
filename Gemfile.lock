@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    pdf-forms (0.3.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rake (0.8.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pdf-forms!
+  rake

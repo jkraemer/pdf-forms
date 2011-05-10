@@ -17,8 +17,22 @@ module PdfForms
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
-      call_pdftk template, 'fill_form', tmp.path, 'output', destination, 'flatten', encrypt_options(tmp.path)
+      call_pdftk "'#{template}'", 'fill_form', tmp.path, 'output', destination, 'flatten', encrypt_options(tmp.path)
       tmp.unlink
+    end
+    
+    # pdftk.read '/path/to/form.pdf'
+    # returns an instance of PdfForms::Pdf representing the given template
+    def read(path)
+      Pdf.new path, self
+    end
+    
+    def get_field_names(template)
+      read(template).fields
+    end
+    
+    def call_pdftk(*args)
+      %x{#{pdftk} #{args.flatten.compact.join ' '}}
     end
     
     protected
@@ -27,10 +41,6 @@ module PdfForms
       if options[:encrypt]
         ['encrypt_128bit', 'owner_pw', pwd, options[:encrypt_options]]
       end
-    end
-    
-    def call_pdftk(*args)
-      %x{#{pdftk} #{args.flatten.compact.join ' '}}
     end
     
   end
