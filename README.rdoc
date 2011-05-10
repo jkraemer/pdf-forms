@@ -33,7 +33,7 @@ First get pdftk from http://www.accesspdf.com/pdftk/ and install it.
 
 == INSTALL:
 
-  $ sudo gem install jkraemer-pdf-forms
+  $ gem install pdf-forms
 
 == CODE:
 
