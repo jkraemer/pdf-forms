@@ -4,6 +4,7 @@ module PdfForms
 
     def initialize(path, pdftk)
       @path = path
+      raise IOError unless File.readable?(path)
       @pdftk = pdftk
     end
 
