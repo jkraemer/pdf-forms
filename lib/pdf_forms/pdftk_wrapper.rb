@@ -55,16 +55,16 @@ module PdfForms
       "#{pdftk} #{args.flatten.compact.join ' '} 2>&1"
     end
 
-
     def add_options(pwd)
-      options = []
+      return if options.empty?
+      opt_args = []
       if options[:flatten]
-        options << ['flatten']
+        opt_args << 'flatten'
       end
       if options[:encrypt]
-        options.concat ['encrypt_128bit', 'owner_pw', pwd, options[:encrypt_options]]
+        opt_args.concat ['encrypt_128bit', 'owner_pw', pwd, options[:encrypt_options]]
       end
-      return options unless optons.empty?
+      opt_args
     end
 
 
