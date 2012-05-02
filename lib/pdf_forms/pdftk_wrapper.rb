@@ -8,7 +8,7 @@ module PdfForms
 
     attr_reader :pdftk, :options
 
-    # PdftkWrapper.new('/usr/bin/pdftk', :encrypt => true, :encrypt_options => 'allow Printing')
+    # PdftkWrapper.new('/usr/bin/pdftk', :flatten => true, :encrypt => true, :encrypt_options => 'allow Printing')
     def initialize(pdftk_path, options = {})
       @pdftk = pdftk_path
       @options = options
@@ -20,7 +20,7 @@ module PdfForms
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
-      command = pdftk_command %Q("#{template}"), 'fill_form', tmp.path, 'output', destination, 'flatten', encrypt_options(tmp.path)
+      command = pdftk_command %Q("#{template}"), 'fill_form', %Q("#{tmp.path}"), 'output', destination, add_options(tmp.path)
       output = %x{#{command}}
       unless File.readable?(destination) && File.size(destination) > 0
         raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}")
@@ -43,17 +43,31 @@ module PdfForms
       %x{#{pdftk_command args}}
     end
 
+    def cat(*files,output)
+      files = files[0] if files[0].class == Array
+      input = files.map{|f| %Q("#{f}")}
+      call_pdftk(*input,'output',output)
+    end
+
     protected
 
     def pdftk_command(*args)
       "#{pdftk} #{args.flatten.compact.join ' '} 2>&1"
     end
 
-    def encrypt_options(pwd)
-      if options[:encrypt]
-        ['encrypt_128bit', 'owner_pw', pwd, options[:encrypt_options]]
+
+    def add_options(pwd)
+      options = []
+      if options[:flatten]
+        options << ['flatten']
       end
+      if options[:encrypt]
+        options.concat ['encrypt_128bit', 'owner_pw', pwd, options[:encrypt_options]]
+      end
+      return options unless optons.empty?
     end
+
+
 
   end
 end
