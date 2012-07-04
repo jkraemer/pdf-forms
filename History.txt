@@ -1,3 +1,12 @@
+== 0.4.0 2012-07-04
+
+* cat function
+* flattening of the output pdf is now an option (and defaults to false,
+  which is a change to previous versions where the flattening always
+  took place)
+* correct path quoting for win
+* thanks to https://github.com/dsisnero
+
 == 0.3.0 2011-05-10
 
 * new function to get the form field names present in a given PDF.
