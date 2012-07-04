@@ -20,7 +20,7 @@ module PdfForms
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
-      command = pdftk_command %Q("#{template}"), 'fill_form', %Q("#{tmp.path}"), 'output', destination, add_options(tmp.path)
+      command = pdftk_command %Q("#{template}"), 'fill_form', %Q("#{tmp.path}"), 'output', %Q("#{destination}"), add_options(tmp.path)
       output = %x{#{command}}
       unless File.readable?(destination) && File.size(destination) > 0
         raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}")
