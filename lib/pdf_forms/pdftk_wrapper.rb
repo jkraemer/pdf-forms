@@ -45,11 +45,23 @@ module PdfForms
 
     def cat(*files,output)
       files = files[0] if files[0].class == Array
-      input = files.map{|f| %Q("#{f}")}
+      input = quote_paths(files)
+      output = quote_paths(output)
       call_pdftk(*input,'output',output)
     end
 
     protected
+
+    def quote_paths(*files)
+      paths = Array(files.flatten.compact).map{|f| file_path(f)}
+      paths.map{|p| %Q("#{p}")}
+    end
+
+    def file_path(path)
+      path = path.to_path if path.respond_to? :to_path
+      path.to_str
+    end
+
 
     def pdftk_command(*args)
       "#{pdftk} #{args.flatten.compact.join ' '} 2>&1"
