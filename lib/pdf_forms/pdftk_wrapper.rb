@@ -6,21 +6,25 @@ module PdfForms
   # Wraps calls to PdfTk
   class PdftkWrapper
 
+    include SafePath
+
     attr_reader :pdftk, :options
 
     # PdftkWrapper.new('/usr/bin/pdftk', :flatten => true, :encrypt => true, :encrypt_options => 'allow Printing')
     def initialize(pdftk_path, options = {})
-      @pdftk = pdftk_path
+      @pdftk = file_path(pdftk_path)
       @options = options
     end
 
     # pdftk.fill_form '/path/to/form.pdf', '/path/to/destination.pdf', :field1 => 'value 1'
     def fill_form(template, destination, data = {})
+      q_template = safe_path(template)
+      q_destination = safe_path(destination)
       fdf = Fdf.new(data)
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
-      command = pdftk_command %Q("#{template}"), 'fill_form', %Q("#{tmp.path}"), 'output', destination, add_options(tmp.path)
+      command = pdftk_command q_template, 'fill_form', safe_path(tmp.path), 'output', q_destination, add_options(tmp.path)
       output = %x{#{command}}
       unless File.readable?(destination) && File.size(destination) > 0
         raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}")
@@ -44,27 +48,19 @@ module PdfForms
     end
 
     def cat(*files,output)
-      files = files[0] if files[0].class == Array
-      input = quote_paths(files)
-      output = quote_paths(output)
+      input_array, output_file = Array(files.flatten.compact), output
+      input = input_array.map{|path| safe_path(path)}
+      output = safe_path(output_file)
       call_pdftk(*input,'output',output)
     end
 
     protected
 
-    def quote_paths(*files)
-      paths = Array(files.flatten.compact).map{|f| file_path(f)}
-      paths.map{|p| %Q("#{p}")}
-    end
 
-    def file_path(path)
-      path = path.to_path if path.respond_to? :to_path
-      path.to_str
-    end
 
 
     def pdftk_command(*args)
-      "#{pdftk} #{args.flatten.compact.join ' '} 2>&1"
+      quote_path(pdftk) + " #{args.flatten.compact.join ' '} 2>&1"
     end
 
     def add_options(pwd)
