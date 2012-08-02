@@ -1,11 +1,6 @@
-== 0.4.0 2012-07-04
+== 0.4.2 2012-08-02
 
-* cat function
-* flattening of the output pdf is now an option (and defaults to false,
-  which is a change to previous versions where the flattening always
-  took place)
-* correct path quoting for win
-* thanks to https://github.com/dsisnero
+* more windows path quoting fixes by https://github.com/dsisnero
 
 == 0.3.0 2011-05-10
 
