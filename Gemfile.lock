@@ -1,16 +1,25 @@
 PATH
   remote: .
   specs:
-    pdf-forms (0.3.2)
+    pdf-forms (0.4.2)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    rake (0.8.7)
+    coderay (1.0.7)
+    method_source (0.8)
+    pry (0.9.10)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.3.1)
+    pry-nav (0.2.2)
+      pry (~> 0.9.10)
+    slop (3.3.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   pdf-forms!
-  rake
+  pry (> 0.0)
+  pry-nav (> 0.0)

@@ -1,5 +1,5 @@
 require 'test_helper'
-
+require 'pry'
 class PdftkWrapperTest < Test::Unit::TestCase
 
   def setup
