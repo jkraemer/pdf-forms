@@ -27,7 +27,14 @@ module PdfForms
       command = pdftk_command q_template, 'fill_form', safe_path(tmp.path), 'output', q_destination, add_options(tmp.path)
       output = %x{#{command}}
       unless File.readable?(destination) && File.size(destination) > 0
-        raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}")
+        fdf_path = nil
+        begin
+          fdf_path = File.join(File.dirname(tmp.path), "#{Time.now.strftime '%Y%m%d%H%M%S'}.fdf")
+          fdf.save_to fdf_path
+        rescue Exception
+          fdf_path = "#{$!}\n#{$!.backtrace.join("\n")}"
+        end
+        raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}\nfailing form data has been saved to #{fdf_path}")
       end
     ensure
       tmp.unlink if tmp
