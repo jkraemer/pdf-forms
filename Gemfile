@@ -1,4 +1,6 @@
-source "http://rubygems.org"
+source :rubygems
+
+gem 'rake'
 
 # Will automatically pull in this gem and all its
 # dependencies specified in the gemspec
