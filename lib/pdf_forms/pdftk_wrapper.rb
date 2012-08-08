@@ -54,11 +54,14 @@ module PdfForms
       %x{#{pdftk_command args}}
     end
 
-    def cat(*files,output)
+    # args: file1, file2, output
+    def cat(*args)
+      output = args.pop
+      input = args
       input_array, output_file = Array(files.flatten.compact), output
       input = input_array.map{|path| safe_path(path)}
       output = safe_path(output_file)
-      call_pdftk(*input,'output',output)
+      call_pdftk(*([input, 'output', output].flatten))
     end
 
     protected
