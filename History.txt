@@ -1,3 +1,7 @@
+== 0.4.4 2012-08-08
+
+* remove 1.9 only syntax intruduced with pull requests
+
 == 0.4.2 2012-08-02
 
 * more windows path quoting fixes by https://github.com/dsisnero
