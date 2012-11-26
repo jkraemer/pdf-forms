@@ -20,7 +20,7 @@ module PdfForms
     def read_fields
       field_output = @pdftk.call_pdftk quote_path(path), 'dump_data_fields'
       @fields = field_output.split(/^---\n/).map do |field_text|
-        if field_text =~ /^FieldName: (\w+)$/
+        if field_text =~ /^FieldName:\s*(.+?)\s*$/
           $1
         end
       end.compact.uniq

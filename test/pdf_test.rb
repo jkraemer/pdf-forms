@@ -6,7 +6,7 @@ class PdfTest < Test::Unit::TestCase
     @pdftk = PdfForms::PdftkWrapper.new 'pdftk'
   end
 
-  def test_fields    
+  def test_fields
     pdf = PdfForms::Pdf.new 'test/fixtures/form.pdf', @pdftk
     assert fields = pdf.fields
     assert fields.any?
