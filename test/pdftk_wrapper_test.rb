@@ -7,6 +7,10 @@ class PdftkWrapperTest < Test::Unit::TestCase
     @pdftk_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true
   end
 
+  def test_should_check_executable
+    assert_raises(RuntimeError){ PdfForms.new('foobar') }
+  end
+
   def test_field_names
     assert fields = @pdftk.get_field_names( 'test/fixtures/form.pdf' )
     assert fields.any?

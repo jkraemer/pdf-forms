@@ -13,6 +13,7 @@ module PdfForms
     # PdftkWrapper.new('/usr/bin/pdftk', :flatten => true, :encrypt => true, :encrypt_options => 'allow Printing')
     def initialize(pdftk_path, options = {})
       @pdftk = file_path(pdftk_path)
+      raise "pdftk executable #{@pdftk} not found" unless call_pdftk('-h') =~ /pdftk\s+\d/i
       @options = options
     end
 
