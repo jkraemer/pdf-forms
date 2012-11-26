@@ -1,3 +1,8 @@
+== 0.4.5 2012-11-26
+
+* allow for fieldnames with spaces
+* check pdftk executable (fixes issue #5)
+
 == 0.4.4 2012-08-08
 
 * remove 1.9 only syntax introduced with pull requests
