@@ -13,6 +13,13 @@ class PdfTest < Test::Unit::TestCase
     assert fields.include?('program_name')
   end
 
+  def test_should_have_field_metadata
+    pdf = PdfForms::Pdf.new 'test/fixtures/form.pdf', @pdftk
+    assert f = pdf.field('area5_answer4')
+    assert_equal 'Button', f.type
+    assert_equal ['NOT YET', 'Off', 'SOMETIMES', 'YES'], f.options
+  end
+
   def test_should_error_when_file_not_readable
     assert_raises(IOError){
       PdfForms::Pdf.new 'foo/bar.pdf', @pdftk
