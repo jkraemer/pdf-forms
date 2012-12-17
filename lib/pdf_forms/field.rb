@@ -14,7 +14,7 @@ module PdfForms
           @type = $1
         when /FieldName:\s*(.+?)\s*$/
           @name = $1
-        when /FieldStateOption:\s*(.+?)\s*$/
+        when /FieldStateOption:\s*(.*?)\s*$/
           (@options ||= []) << $1
         end
       end
