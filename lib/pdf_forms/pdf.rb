@@ -13,19 +13,14 @@ module PdfForms
       @pdftk = pdftk
     end
 
-    # list of field names
+    # list of field objects for all defined fields
     def fields
-      field_objects.map{ |f| f.name }
+      @fields ||= read_fields
     end
 
     # the field object for the named field
     def field(name)
-      field_objects.detect{ |f| f.name == name }
-    end
-
-    # list of field objects for all defined fields
-    def field_objects
-      @fields ||= read_fields
+      fields.detect{ |f| f.name == name }
     end
 
     protected

@@ -47,8 +47,12 @@ module PdfForms
       Pdf.new path, self
     end
 
-    def get_field_names(template)
+    def get_fields(template)
       read(template).fields
+    end
+
+    def get_field_names(template)
+      read(template).fields.map{|f| f.name}
     end
 
     def call_pdftk(*args)

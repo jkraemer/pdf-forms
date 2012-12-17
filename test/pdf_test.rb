@@ -10,7 +10,7 @@ class PdfTest < Test::Unit::TestCase
     pdf = PdfForms::Pdf.new 'test/fixtures/form.pdf', @pdftk
     assert fields = pdf.fields
     assert fields.any?
-    assert fields.include?('program_name')
+    assert fields.detect{|f|f.name == 'program_name'}
   end
 
   def test_should_have_field_metadata
