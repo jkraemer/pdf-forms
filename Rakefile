@@ -10,6 +10,8 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
+task :default => :test
+
 gemspec = eval(File.read("pdf-forms.gemspec"))
 
 task :build => "#{gemspec.full_name}.gem"
