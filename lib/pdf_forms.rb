@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 require 'pdf_forms/version'
 require 'pdf_forms/safe_path'
 require 'pdf_forms/fdf'

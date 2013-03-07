@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 require 'pdf_forms/field'
 
 module PdfForms

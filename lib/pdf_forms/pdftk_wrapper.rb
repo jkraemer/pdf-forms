@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 require 'tempfile'
 module PdfForms
   class PdftkError < StandardError

@@ -1,4 +1,4 @@
-# coding: utf-8
+# coding: UTF-8
 
 require 'test_helper'
 class PdftkWrapperTest < Test::Unit::TestCase

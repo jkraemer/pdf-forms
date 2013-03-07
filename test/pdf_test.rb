@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 require 'test_helper'
 
 class PdfTest < Test::Unit::TestCase
