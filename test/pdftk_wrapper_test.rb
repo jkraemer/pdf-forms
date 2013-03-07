@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'test_helper'
 require 'pry'
 class PdftkWrapperTest < Test::Unit::TestCase
@@ -33,6 +35,12 @@ class PdftkWrapperTest < Test::Unit::TestCase
     @pdftk_options.fill_form 'test/fixtures/form.pdf', 'output.pdf', 'program_name' => 'SOME TEXT'
     assert File.size('output.pdf') > 0
     FileUtils.rm 'output.pdf'
+  end
+
+  def test_fill_form_with_non_ascii_iso_8859_chars
+    @pdftk_options.fill_form 'test/fixtures/form.pdf', 'output_umlauts.pdf', 'program_name' => 'with ß and ümlaut'
+    assert File.size('output_umlauts.pdf') > 0
+    FileUtils.rm 'output_umlauts.pdf'
   end
 
 end
