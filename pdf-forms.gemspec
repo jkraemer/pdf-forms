@@ -18,8 +18,6 @@ Gem::Specification.new do |s|
 
   # If you have other dependencies, add them here
   # s.add_dependency "another", "~> 1.2"
-  s.add_development_dependency "pry", "> 0.0"
-  s.add_development_dependency "pry-nav", "> 0.0"
 
   # If you need to check in files that aren't .rb files, add them here
   s.files        = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md", "*.rdoc"]
