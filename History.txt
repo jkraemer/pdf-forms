@@ -1,3 +1,8 @@
+== 0.5.4 2013-03-15
+
+* add lib/pdf-forms.rb to make bundler auto require work
+* merge readme patch, thanks @robinator
+
 == 0.5.3 2013-03-07
 
 * encode fdf content to ISO-8859-15 using iconv if String#encode! is not
