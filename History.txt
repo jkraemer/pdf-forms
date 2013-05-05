@@ -1,3 +1,9 @@
+== 0.5.5 2013-05-05
+
+* bugfix cat method (issue #8), thanks to RevoHoffman
+* support more/generic field attributes (issue / pull request #7),
+  thanks to netinlet
+
 == 0.5.4 2013-03-15
 
 * add lib/pdf-forms.rb to make bundler auto require work
