@@ -61,20 +61,16 @@ module PdfForms
       %x{#{pdftk_command args}}
     end
 
-    # args: file1, file2, output
+    # concatenate documents
+    #
+    # args: in_file1, in_file2, ... , in_file_n, output
     def cat(*args)
-      output = args.pop
-      input = args
-      input_array, output_file = Array(files.flatten.compact), output
-      input = input_array.map{|path| safe_path(path)}
-      output = safe_path(output_file)
-      call_pdftk(*([input, 'output', output].flatten))
+      arguments = args.flatten.compact.map{|path| safe_path(path)}
+      output = arguments.pop
+      call_pdftk(*([arguments, 'output', output].flatten))
     end
 
     protected
-
-
-
 
     def pdftk_command(*args)
       quote_path(pdftk) + " #{args.flatten.compact.join ' '} 2>&1"

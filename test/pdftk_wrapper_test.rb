@@ -42,4 +42,10 @@ class PdftkWrapperTest < Test::Unit::TestCase
     FileUtils.rm 'output_umlauts.pdf'
   end
 
+  def test_cat_documents
+    @pdftk.cat 'test/fixtures/one.pdf', 'test/fixtures/two.pdf', 'output.pdf'
+    assert File.size('output.pdf') > 0
+    FileUtils.rm 'output.pdf'
+  end
+
 end
