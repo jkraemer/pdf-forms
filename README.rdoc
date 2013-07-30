@@ -1,4 +1,4 @@
-= pdf-forms 
+= pdf-forms
   http://github.com/jkraemer/pdf-forms/
   by Jens Kraemer, jk@jkraemer.net
 
@@ -22,17 +22,20 @@ Fill out PDF forms with pdftk (http://www.accesspdf.com/pdftk/).
 First get pdftk from http://www.accesspdf.com/pdftk/ and install it.
 
   require 'pdf_forms'
-  
+
   # adjust the pdftk path to suit your pdftk installation
   pdftk = PdfForms.new('/usr/local/bin/pdftk')
-  
+
   # find out the field names that are present in form.pdf
   pdftk.get_field_names 'path/to/form.pdf'
-  
-  # take form.pdf, set the 'foo' field to 'bar' and save the document to myform.pdf
+
+  # take form.pdf, set the 'foo' field to 'bar' and save the document as a pdf form to myform.pdf
   pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
-  
-  
+
+  # take form.pdf, set the 'foo' field to 'bar' and save the document as a flattened pdf to myform.pdf
+  pdftk.fill_flattened_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
+
+
 
 == INSTALL:
 
