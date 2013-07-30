@@ -1,12 +1,12 @@
 PATH
   remote: .
   specs:
-    pdf-forms (0.5.5)
+    pdf-forms (0.5.6)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    rake (0.9.2.2)
+    rake (10.1.0)
 
 PLATFORMS
   ruby

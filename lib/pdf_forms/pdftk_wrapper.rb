@@ -43,6 +43,30 @@ module PdfForms
       tmp.unlink if tmp
     end
 
+    # pdftk.fill_form '/path/to/form.pdf', '/path/to/destination.pdf', :field1 => 'value 1'
+    def fill_flattened_form(template, destination, data = {})
+      q_template = safe_path(template)
+      q_destination = safe_path(destination)
+      fdf = Fdf.new(data)
+      tmp = Tempfile.new('pdf_forms-fdf')
+      tmp.close
+      fdf.save_to tmp.path
+      command = pdftk_command q_template, 'fill_form', safe_path(tmp.path), 'output', q_destination, add_options(tmp.path), 'flatten'
+      output = %x{#{command}}
+      unless File.readable?(destination) && File.size(destination) > 0
+        fdf_path = nil
+        begin
+          fdf_path = File.join(File.dirname(tmp.path), "#{Time.now.strftime '%Y%m%d%H%M%S'}.fdf")
+          fdf.save_to fdf_path
+        rescue Exception
+          fdf_path = "#{$!}\n#{$!.backtrace.join("\n")}"
+        end
+        raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}\nfailing form data has been saved to #{fdf_path}")
+      end
+    ensure
+      tmp.unlink if tmp
+    end
+
     # pdftk.read '/path/to/form.pdf'
     # returns an instance of PdfForms::Pdf representing the given template
     def read(path)
