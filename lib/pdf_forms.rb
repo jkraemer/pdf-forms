@@ -2,6 +2,7 @@
 
 require 'pdf_forms/version'
 require 'pdf_forms/safe_path'
+require 'pdf_forms/data_format'
 require 'pdf_forms/fdf'
 require 'pdf_forms/pdf'
 require 'pdf_forms/pdftk_wrapper'
