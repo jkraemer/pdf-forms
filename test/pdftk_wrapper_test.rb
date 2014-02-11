@@ -4,8 +4,8 @@ require 'test_helper'
 class PdftkWrapperTest < Test::Unit::TestCase
 
   def setup
-    @pdftk = PdfForms.new 'pdftk'
-    @pdftk_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true
+    @pdftk = PdfForms.new 'pdftk', :data_format => data_format
+    @pdftk_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true, :data_format => data_format
   end
 
   def test_should_check_executable
@@ -48,4 +48,7 @@ class PdftkWrapperTest < Test::Unit::TestCase
     FileUtils.rm 'output.pdf'
   end
 
+  def data_format
+    nil
+  end
 end
