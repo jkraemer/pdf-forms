@@ -13,7 +13,7 @@ module PdfForms
       }.merge(options)
     end
 
-    # generate FDF content
+    # generate PDF content in this data format
     def to_pdf_data
       pdf_data = header
 
