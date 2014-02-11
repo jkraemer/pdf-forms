@@ -23,7 +23,7 @@ module PdfForms
     def fill_form(template, destination, data = {})
       q_template = safe_path(template)
       q_destination = safe_path(destination)
-      fdf = Fdf.new(data)
+      fdf = data_format(data)
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
@@ -72,6 +72,11 @@ module PdfForms
 
     protected
 
+    def data_format(data)
+      data_format = options[:data_format] || 'Fdf'
+      eval(data_format).new(data)
+    end
+
     def pdftk_command(*args)
       quote_path(pdftk) + " #{args.flatten.compact.join ' '} 2>&1"
     end
@@ -87,8 +92,5 @@ module PdfForms
       end
       opt_args
     end
-
-
-
   end
 end

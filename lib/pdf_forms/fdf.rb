@@ -6,34 +6,15 @@ module PdfForms
   #
   # Straight port of Perl's PDF::FDF::Simple by Steffen Schwigon.
   # Parsing FDF files is not supported (yet).
-  class Fdf
-
-    attr_reader :options
+  class Fdf < DataFormat
 
     def initialize(data = {}, options = {})
-      @data = data
-      @options = {
-        :file => nil,
-        :ufile => nil,
-        :id => nil
-      }.merge(options)
+      super
     end
 
-    # generate FDF content
-    def to_fdf
-      fdf = header
+    protected
 
-      @data.each do |key, value|
-        if Hash === value
-          value.each do |sub_key, sub_value|
-            fdf << field("#{key}_#{sub_key}", sub_value)
-          end
-        else
-          fdf << field(key, value)
-        end
-      end
-
-      fdf << footer
+    def encode_data(fdf)
       # I have yet to see a version of pdftk which can handle UTF8 input,
       # so we convert to ISO-8859-15 here, replacing unknown / invalid chars
       # with the default replacement which is '?'.
@@ -43,17 +24,9 @@ module PdfForms
       else
         # pre 1.9
         require 'iconv'
-        fdf = Iconv.conv('ISO-8859-15//IGNORE', 'utf-8', fdf)
+        Iconv.conv('ISO-8859-15//IGNORE', 'utf-8', fdf)
       end
-      return fdf
     end
-
-    # write fdf content to path
-    def save_to(path)
-      (File.open(path, 'wb') << to_fdf).close
-    end
-
-    protected
 
     def header
       header = "%FDF-1.2\n\n1 0 obj\n<<\n/FDF << /Fields 2 0 R"
