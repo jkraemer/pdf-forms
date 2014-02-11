@@ -1,3 +1,4 @@
+* Added XFdf support
 == 0.5.5 2013-05-05
 
 * bugfix cat method (issue #8), thanks to RevoHoffman
