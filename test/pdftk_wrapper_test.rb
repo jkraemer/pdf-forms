@@ -12,13 +12,13 @@ class PdftkWrapperTest < Test::Unit::TestCase
     assert_raises(RuntimeError){ PdfForms.new('foobar') }
   end
 
-  def test_field_names
+  def test_get_fields
     assert fields = @pdftk.get_fields( 'test/fixtures/form.pdf' )
     assert fields.any?
     assert fields.detect{|f| f.name == 'program_name'}
   end
 
-  def test_field_names
+  def test_get_field_names
     assert fields = @pdftk.get_field_names( 'test/fixtures/form.pdf' )
     assert fields.any?
     assert fields.include?('program_name')
