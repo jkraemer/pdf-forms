@@ -74,7 +74,7 @@ module PdfForms
 
     def data_format(data)
       data_format = options[:data_format] || 'Fdf'
-      eval(data_format).new(data)
+      PdfForms.const_get(data_format).new(data)
     end
 
     def pdftk_command(*args)
