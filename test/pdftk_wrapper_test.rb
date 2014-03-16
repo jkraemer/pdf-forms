@@ -1,4 +1,4 @@
-# coding: UTF-8
+# coding: utf-8
 
 require 'test_helper'
 class PdftkWrapperTest < Test::Unit::TestCase
@@ -27,6 +27,15 @@ class PdftkWrapperTest < Test::Unit::TestCase
   def test_fill_form
     @pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf', 'program_name' => 'SOME TEXT'
     assert File.size('output.pdf') > 0
+    FileUtils.rm 'output.pdf'
+  end
+
+  def test_fill_form_and_flatten
+    @pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf',
+                     {'program_name' => 'SOME TEXT'}, {:flatten => true}
+    assert File.size('output.pdf') > 0
+    fields = @pdftk.get_fields('output.pdf')
+    assert fields.count == 0
     FileUtils.rm 'output.pdf'
   end
 
