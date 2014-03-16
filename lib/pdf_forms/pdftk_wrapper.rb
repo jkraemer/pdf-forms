@@ -20,7 +20,7 @@ module PdfForms
     end
 
     # pdftk.fill_form '/path/to/form.pdf', '/path/to/destination.pdf', :field1 => 'value 1'
-    def fill_form(template, destination, data = {})
+    def fill_form(template, destination, data = {}, options = {})
       q_template = safe_path(template)
       q_destination = safe_path(destination)
       fdf = data_format(data)
@@ -28,6 +28,7 @@ module PdfForms
       tmp.close
       fdf.save_to tmp.path
       command = pdftk_command q_template, 'fill_form', safe_path(tmp.path), 'output', q_destination, add_options(tmp.path)
+      command += " flatten" if options[:flatten]
       output = %x{#{command}}
       unless File.readable?(destination) && File.size(destination) > 0
         fdf_path = nil
