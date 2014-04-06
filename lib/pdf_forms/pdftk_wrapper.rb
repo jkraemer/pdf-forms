@@ -81,19 +81,19 @@ module PdfForms
       quote_path(pdftk) + " #{args.flatten.compact.join ' '} 2>&1"
     end
 
-    def option_or_global(local = {}, attrib)
+    def option_or_global(attrib, local = {})
       local[attrib] || options[attrib]
     end
 
     def add_options(local_options = {})
       return if options.empty? && local_options.empty?
       opt_args = []
-      if option_or_global(local_options, :flatten)
+      if option_or_global(:flatten, local_options)
         opt_args << 'flatten'
       end
-      if option_or_global(local_options, :encrypt)
-        encrypt_pass = option_or_global(local_options, :encrypt_password)
-        encrypt_options = option_or_global(local_options, :encrypt_options)
+      if option_or_global(:encrypt, local_options)
+        encrypt_pass = option_or_global(:encrypt_password, local_options)
+        encrypt_options = option_or_global(:encrypt_options, local_options)
         opt_args.concat ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options]
       end
       opt_args
