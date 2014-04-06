@@ -29,8 +29,6 @@ First get pdftk from http://www.accesspdf.com/pdftk/ and install it.
   # add :data_format => 'XFdf' option to generate XFDF instead of FDF when filling a form
   pdftk = PdfForms.new('/usr/local/bin/pdftk')
 
-  add :data_format => 'XFdf' option to generate XFDF instead of FDF when filling a form
-
   # find out the field names that are present in form.pdf
   pdftk.get_field_names 'path/to/form.pdf'
 
