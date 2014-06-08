@@ -18,6 +18,7 @@ class PdftkWrapperTest < Test::Unit::TestCase
     assert fields.detect{|f| f.name == 'program_name'}
   end
 
+
   def test_get_field_names
     assert fields = @pdftk.get_field_names( 'test/fixtures/form.pdf' )
     assert fields.any?
