@@ -46,13 +46,21 @@ module PdfForms
     # pdftk.read '/path/to/form.pdf'
     # returns an instance of PdfForms::Pdf representing the given template
     def read(path)
-      Pdf.new path, self
+      Pdf.new path, self, options
     end
 
+    # Get field metadata for template
+    #
+    # Initialize the object with utf8_fields: true to get utf8 encoded field
+    # metadata.
     def get_fields(template)
       read(template).fields
     end
 
+    # get field names for template
+    #
+    # Initialize the object with utf8_fields: true to get utf8 encoded field
+    # names.
     def get_field_names(template)
       read(template).fields.map{|f| f.name}
     end

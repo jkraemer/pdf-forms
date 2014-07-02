@@ -5,11 +5,24 @@ class PdftkWrapperTest < Test::Unit::TestCase
 
   def setup
     @pdftk = PdfForms.new 'pdftk', :data_format => data_format
+    @pdftk_utf8 = PdfForms.new 'pdftk', utf8_fields: true
     @pdftk_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true, :data_format => data_format
   end
 
   def test_should_check_executable
     assert_raises(RuntimeError){ PdfForms.new('foobar') }
+  end
+
+  def test_get_fields_utf8
+    assert fields = @pdftk_utf8.get_fields( 'test/fixtures/form.pdf' )
+    assert fields.any?
+    assert fields.detect{|f| f.name == 'program_name'}
+  end
+
+  def test_get_field_names_utf8
+    assert fields = @pdftk_utf8.get_field_names( 'test/fixtures/form.pdf' )
+    assert fields.any?
+    assert fields.include?('program_name')
   end
 
   def test_get_fields

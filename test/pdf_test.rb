@@ -15,6 +15,13 @@ class PdfTest < Test::Unit::TestCase
     assert fields.detect{|f|f.name == 'program_name'}
   end
 
+  def test_fields_utf8
+    pdf = PdfForms::Pdf.new 'test/fixtures/form.pdf', @pdftk, utf8_fields: true
+    assert fields = pdf.fields
+    assert fields.any?
+    assert fields.detect{|f|f.name == 'program_name'}
+  end
+
   def test_should_have_field_metadata
     pdf = PdfForms::Pdf.new 'test/fixtures/form.pdf', @pdftk
     assert f = pdf.field('area5_answer4')

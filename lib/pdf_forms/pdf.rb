@@ -7,15 +7,19 @@ module PdfForms
 
     include SafePath
 
-    attr_reader :path
+    attr_reader :path, :options
 
-    def initialize(path, pdftk)
+    def initialize(path, pdftk, options = {})
+      @options = options
       @path = file_path(path)
       raise IOError unless File.readable?(@path)
       @pdftk = pdftk
     end
 
     # list of field objects for all defined fields
+    #
+    # Initialize the object with utf8_fields: true to get utf8 encoded field
+    # names.
     def fields
       @fields ||= read_fields
     end
@@ -28,7 +32,8 @@ module PdfForms
     protected
 
     def read_fields
-      field_output = @pdftk.call_pdftk quote_path(path), 'dump_data_fields'
+      dump_method = options[:utf8_fields] ? 'dump_data_fields_utf8' : 'dump_data_fields'
+      field_output = @pdftk.call_pdftk quote_path(path), dump_method
       @fields = field_output.split(/^---\n/).map do |field_text|
         Field.new field_text if field_text =~ /FieldName:/
       end.compact

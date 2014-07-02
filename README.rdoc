@@ -26,7 +26,12 @@ First get pdftk from http://www.accesspdf.com/pdftk/ and install it.
   require 'pdf_forms'
 
   # adjust the pdftk path to suit your pdftk installation
-  # add :data_format => 'XFdf' option to generate XFDF instead of FDF when filling a form
+  # add :data_format => 'XFdf' option to generate XFDF instead of FDF when
+  # filling a form (XFDF is supposed to have better support for non-western
+  # encodings)
+  # add :utf8_fields => true in order to get UTF8 encoded field metadata (this
+  # will use dump_data_fields_utf8 instead of dump_data_fields in the call to
+  # pdftk)
   pdftk = PdfForms.new('/usr/local/bin/pdftk')
 
   # find out the field names that are present in form.pdf
