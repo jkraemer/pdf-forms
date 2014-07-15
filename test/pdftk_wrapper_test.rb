@@ -14,15 +14,15 @@ class PdftkWrapperTest < Test::Unit::TestCase
   end
 
   def test_get_fields_utf8
-    assert fields = @pdftk_utf8.get_fields( 'test/fixtures/form.pdf' )
+    assert fields = @pdftk_utf8.get_fields( 'test/fixtures/utf8.pdf' )
     assert fields.any?
-    assert fields.detect{|f| f.name == 'program_name'}
+    assert fields.detect{|f| f.name == '•?((¯°·._.• µţƒ-8 ƒɨ€ℓď •._.·°¯))؟•'}
   end
 
   def test_get_field_names_utf8
-    assert fields = @pdftk_utf8.get_field_names( 'test/fixtures/form.pdf' )
+    assert fields = @pdftk_utf8.get_field_names( 'test/fixtures/utf8.pdf' )
     assert fields.any?
-    assert fields.include?('program_name')
+    assert fields.include?('•?((¯°·._.• µţƒ-8 ƒɨ€ℓď •._.·°¯))؟•')
   end
 
   def test_get_fields
@@ -45,7 +45,7 @@ class PdftkWrapperTest < Test::Unit::TestCase
 
   def test_fill_form_and_flatten
     @pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf',
-                     {'program_name' => 'SOME TEXT'}, {:flatten => true}
+      {'program_name' => 'SOME TEXT'}, {:flatten => true}
     assert File.size('output.pdf') > 0
     fields = @pdftk.get_fields('output.pdf')
     assert fields.count == 0

@@ -16,10 +16,10 @@ class PdfTest < Test::Unit::TestCase
   end
 
   def test_fields_utf8
-    pdf = PdfForms::Pdf.new 'test/fixtures/form.pdf', @pdftk, utf8_fields: true
+    pdf = PdfForms::Pdf.new 'test/fixtures/utf8.pdf', @pdftk, utf8_fields: true
     assert fields = pdf.fields
     assert fields.any?
-    assert fields.detect{|f|f.name == 'program_name'}
+    assert fields.detect{|f|f.name == '•?((¯°·._.• µţƒ-8 ƒɨ€ℓď •._.·°¯))؟•'}
   end
 
   def test_should_have_field_metadata
