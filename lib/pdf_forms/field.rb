@@ -17,12 +17,15 @@ module PdfForms
         when /FieldStateOption:\s*(.*?)\s*$/
           (@options ||= []) << $1
         else
-          key, value = line.chomp.split(':').map(&:strip)
-          var_name = key.gsub(/Field/, '').downcase
-          unless self.respond_to?(var_name)
-            self.class.send(:define_method, var_name.to_sym, Proc.new{ instance_variable_get("@#{var_name}".to_sym) } ) # in case new or unknown fields crop up...
+          if match = line.match(/^\s*(?<key>[^:]+):\s*(?<value>.*)$/)
+            key = match[:key].to_s.strip
+            value = match[:value].to_s
+            var_name = key.gsub(/Field/, '').downcase
+            unless self.respond_to?(var_name)
+              self.class.send(:define_method, var_name.to_sym, Proc.new{ instance_variable_get("@#{var_name}".to_sym) } ) # in case new or unknown fields crop up...
+            end
+            instance_variable_set("@#{key.gsub(/Field/, '').downcase}".to_sym, value)
           end
-          instance_variable_set("@#{key.gsub(/Field/, '').downcase}".to_sym, value)
         end
       end
     end

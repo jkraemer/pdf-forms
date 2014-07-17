@@ -11,7 +11,7 @@ class FieldTest < Test::Unit::TestCase
 FieldType: Choice
 FieldName: SomeChoiceField
 FieldFlags: 71696384
-FieldValue: Abc123
+FieldValue: http://github.com foo 
 FieldValueDefault:  
 FieldJustification: Left
 FieldStateOption:  
@@ -25,7 +25,7 @@ END
     assert_equal 'SomeChoiceField', f.name
     assert_equal ['', '010 Foo Bar', 'Another option (xyz)'], f.options
 
-    assert_equal "Abc123", f.value
+    assert_equal "http://github.com foo ", f.value
     assert_equal "", f.valuedefault
     assert_equal "Left", f.justification
     assert_equal "71696384", f.flags
