@@ -27,6 +27,7 @@ module PdfForms
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
+      fill_options = {:tmp_path => tmp.path}.merge(fill_options)
       command = pdftk_command q_template, 'fill_form', safe_path(tmp.path), 'output', q_destination, add_options(fill_options)
       output = %x{#{command}}
       unless File.readable?(destination) && File.size(destination) > 0
@@ -101,6 +102,7 @@ module PdfForms
       end
       if option_or_global(:encrypt, local_options)
         encrypt_pass = option_or_global(:encrypt_password, local_options)
+        encrypt_pass ||= option_or_global(:tmp_path, local_options)
         encrypt_options = option_or_global(:encrypt_options, local_options)
         opt_args.concat ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options]
       end
