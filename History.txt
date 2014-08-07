@@ -1,3 +1,7 @@
+== 0.5.8 2014-08-07
+
+* Fix bug when encrypting with allow options but without explicit password, thanks to @djohnson
+
 == 0.5.7 2014-04-06
 
 * Support creation of flattened PDFs, thanks to jahkeup
