@@ -23,7 +23,7 @@ unusual here.
 
 ```ruby
 require 'pdf_forms'
-fdf # PdfForms::Fdf.new :key #> 'value', :other_key #> 'other value'
+fdf = PdfForms::Fdf.new :key => 'value', :other_key => 'other value'
 # use to_pdf_data if you just want the fdf data, without writing it to a file
 puts fdf.to_pdf_data
 # write fdf file
@@ -38,22 +38,22 @@ To generate XFDF instead of FDF instantiate `PdfForms::XFdf` instead of `PdfForm
 require 'pdf_forms'
 
 # adjust the pdftk path to suit your pdftk installation
-# add :data_format #> 'XFdf' option to generate XFDF instead of FDF when
+# add :data_format => 'XFdf' option to generate XFDF instead of FDF when
 # filling a form (XFDF is supposed to have better support for non-western
 # encodings)
-# add :utf8_fields #> true in order to get UTF8 encoded field metadata (this
+# add :utf8_fields => true in order to get UTF8 encoded field metadata (this
 # will use dump_data_fields_utf8 instead of dump_data_fields in the call to
 # pdftk)
-pdftk # PdfForms.new('/usr/local/bin/pdftk')
+pdftk = PdfForms.new('/usr/local/bin/pdftk')
 
 # find out the field names that are present in form.pdf
 pdftk.get_field_names 'path/to/form.pdf'
 
 # take form.pdf, set the 'foo' field to 'bar' and save the document to myform.pdf
-pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo #> 'bar'
+pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
 
 # optionally, add the :flatten option to prevent editing of a filled out form
-pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {:foo #> 'bar'}, :flatten #> true
+pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {:foo => 'bar'}, :flatten => true
 ```
 
 ### Prior Art
