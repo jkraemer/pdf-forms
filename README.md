@@ -49,6 +49,16 @@ pdftk = PdfForms.new('/usr/local/bin/pdftk')
 # find out the field names that are present in form.pdf
 pdftk.get_field_names 'path/to/form.pdf'
 
+# find out information about fields
+pdftk.get_fields 'path/to/form.pdf'
+
+# convert a field to a Hash
+# this makes it easy to convert to field to JSON, among other conveniences:
+fields = pdftk.get_fields 'path/to/form.pdf'
+fields.first.to_hash
+fields.first.to_hash.to_json
+
+
 # take form.pdf, set the 'foo' field to 'bar' and save the document to myform.pdf
 pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
 

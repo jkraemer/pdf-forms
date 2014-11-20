@@ -29,6 +29,18 @@ module PdfForms
         end
       end
     end
+    
+    def to_hash
+      {
+        name: @name,
+        type: @type,
+        options: @options,
+        flags: @flags,
+        justification: @justification,
+        value: @value,
+        valuedefault: @valuedefault
+      }
+    end
 
     # Common Fields
     attr_reader :name, :type, :options, :flags, :justification, :value, :valuedefault
