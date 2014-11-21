@@ -29,8 +29,37 @@ module PdfForms
         end
       end
     end
+    
+    def set_name_alt!(name_alt)
+      @name_alt = name_alt
+    end
+    
+    def set_max_length!(max_length)
+      @max_length = max_length
+    end
+    
+    def to_hash
+      @hash ||= {
+        name: @name,
+        type: @type,
+        options: @options,
+        flags: @flags,
+        justification: @justification,
+        value: @value,
+        value_default: @valuedefault,
+        name_alt: @name_alt,
+        max_length: @max_length
+      }.delete_if {|k,v| v.nil?}
+    end
+    
+    def to_json(*args)
+      JSON.pretty_generate(to_hash)
+    end
 
     # Common Fields
-    attr_reader :name, :type, :options, :flags, :justification, :value, :valuedefault
+    attr_reader :name, :type, :options, 
+                :flags, :justification, 
+                :value, :valuedefault, 
+                :name_alt, :max_length
   end
 end

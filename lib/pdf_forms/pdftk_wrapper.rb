@@ -1,5 +1,6 @@
 # coding: UTF-8
 
+require 'json'
 require 'tempfile'
 module PdfForms
   class PdftkError < StandardError
@@ -56,6 +57,10 @@ module PdfForms
     # metadata.
     def get_fields(template)
       read(template).fields
+    end
+    
+    def get_fields_as_json(template)
+      JSON.pretty_generate(get_fields(template))
     end
 
     # get field names for template
