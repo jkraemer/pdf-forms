@@ -2,3 +2,4 @@
 .rvmrc
 *.swp
 .ruby*
+test/fixtures/myform.pdf
