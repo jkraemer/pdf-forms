@@ -43,6 +43,12 @@ END
     assert_equal 'FooTown', f.foo
     assert_equal 'BarTown', f.bar
   end
+  
+  def test_fields_to_hash
+    f = PdfForms::Field.new UNKNOWN_FIELD
+    assert_equal f.respond_to?(:to_hash), true
+    assert_equal f.to_hash.class, Hash
+  end
 
 end
 
