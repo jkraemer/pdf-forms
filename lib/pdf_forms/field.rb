@@ -16,14 +16,17 @@ module PdfForms
         when /FieldStateOption:\s*(.*?)\s*$/
           (@options ||= []) << $1
         else
-          if match = line.match(/^\s*(?<key>[^:]+):\s*(?<value>.*)$/)
-            key = match[:key].to_s.strip
-            value = match[:value].to_s
-            var_name = key.gsub(/Field/, '').downcase
-            unless self.respond_to?(var_name)
-              self.class.send(:define_method, var_name.to_sym, Proc.new{ instance_variable_get("@#{var_name}".to_sym) } ) # in case new or unknown fields crop up...
-            end
-            instance_variable_set("@#{key.gsub(/Field/, '').downcase}".to_sym, value)
+          line.strip!
+          key, value = line.split(": ")
+          key.gsub!(/Field/, "")
+          key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
+          
+          instance_variable_set("@#{key}", value)
+          
+          # dynamically add in fields that we didn't anticipate in ATTRS
+          unless self.respond_to?(key.to_sym)
+            proc = Proc.new { instance_variable_get("@#{key}".to_sym) }
+            self.class.send(:define_method, key.to_sym, proc)
           end
         end
       end
@@ -39,7 +42,7 @@ module PdfForms
     end
 
     # Common Fields
-    ATTRS = [:name, :type, :options, :flags, :justification, :value, :valuedefault, :namealt]
+    ATTRS = [:name, :type, :options, :flags, :justification, :value, :value_default, :name_alt, :max_length]
     ATTRS.each {|attribute| attr_reader attribute}
   end
 end
