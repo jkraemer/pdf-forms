@@ -30,6 +30,12 @@ END
     assert_equal "Left", f.justification
     assert_equal "71696384", f.flags
   end
+  
+  def test_to_hash
+    f = PdfForms::Field.new CHOICE_FIELD
+    assert f.respond_to?(:to_hash)
+    assert_equal ['', '010 Foo Bar', 'Another option (xyz)'], f.to_hash[:options]
+  end
 
 
   UNKNOWN_FIELD = <<-END

@@ -2,7 +2,6 @@
 
 module PdfForms
   class Field
-
     # FieldType: Button
     # FieldName: Sprachoptionen_Inverssuche_Widerspruch
     # FieldFlags: 0
@@ -29,8 +28,18 @@ module PdfForms
         end
       end
     end
+    
+    def to_hash
+      hash = {}
+      ATTRS.each do |attribute|
+        hash[attribute] = self.send(attribute)
+      end
+      
+      hash
+    end
 
     # Common Fields
-    attr_reader :name, :type, :options, :flags, :justification, :value, :valuedefault
+    ATTRS = [:name, :type, :options, :flags, :justification, :value, :valuedefault, :namealt]
+    ATTRS.each {|attribute| attr_reader attribute}
   end
 end
