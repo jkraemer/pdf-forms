@@ -25,10 +25,16 @@ END
     assert_equal 'SomeChoiceField', f.name
     assert_equal ['', '010 Foo Bar', 'Another option (xyz)'], f.options
 
-    assert_equal "http://github.com foo ", f.value
-    assert_equal "", f.valuedefault
+    assert_equal "http://github.com foo", f.value
+    assert_equal nil, f.value_default
     assert_equal "Left", f.justification
     assert_equal "71696384", f.flags
+  end
+  
+  def test_to_hash
+    f = PdfForms::Field.new CHOICE_FIELD
+    assert f.respond_to?(:to_hash)
+    assert_equal ['', '010 Foo Bar', 'Another option (xyz)'], f.to_hash[:options]
   end
 
 
