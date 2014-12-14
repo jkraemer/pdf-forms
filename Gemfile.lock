@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pdf-forms (0.5.8)
+    pdf-forms (0.6.0)
 
 GEM
   remote: https://rubygems.org/

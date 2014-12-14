@@ -1,3 +1,10 @@
+== 0.6.0 2014-12-14
+
+* introduce Field#to_hash
+* camelCased field attributes are now underscored
+* new default field attributes name_alt and max_length
+* thanks to @adelevie !
+
 == 0.5.8 2014-08-07
 
 * Fix bug when encrypting with allow options but without explicit password, thanks to @djohnson
