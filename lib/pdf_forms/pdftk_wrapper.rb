@@ -79,6 +79,13 @@ module PdfForms
       call_pdftk(*([arguments, 'output', output].flatten))
     end
 
+    # stamp one pdf with another
+    #
+    # args: primary_file, stamp_file, output
+    def stamp(primary_file, stamp_file, output)
+      call_pdftk(*([primary_file, 'stamp', stamp_file, 'output', output].flatten))
+    end
+
     protected
 
     def data_format(data)
