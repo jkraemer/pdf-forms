@@ -1,6 +1,8 @@
 # coding: UTF-8
 
 require 'tempfile'
+require 'cliver'
+
 module PdfForms
   class PdftkError < StandardError
   end
@@ -12,9 +14,16 @@ module PdfForms
 
     attr_reader :pdftk, :options
 
+    PDFTK = 'pdftk'
+
+    # Initializes a new wrapper instance. Pdftk will be autodetected from PATH:
+    # PdftkWrapper.new(:flatten => true, :encrypt => true, :encrypt_options => 'allow Printing')
+    #
+    # The pdftk binary may also be explecitly specified:
     # PdftkWrapper.new('/usr/bin/pdftk', :flatten => true, :encrypt => true, :encrypt_options => 'allow Printing')
-    def initialize(pdftk_path, options = {})
-      @pdftk = file_path(pdftk_path)
+    def initialize(*args)
+      pdftk, options = normalize_args *args
+      @pdftk = Cliver.detect! pdftk
       raise "pdftk executable #{@pdftk} not found" unless call_pdftk('-h') =~ /pdftk\s+\d/i
       @options = options
     end
@@ -108,5 +117,25 @@ module PdfForms
       end
       opt_args
     end
+
+    def normalize_args(*args)
+      args = args.dup
+      pdftk = PDFTK
+      options = {}
+      if first_arg = args.shift
+        case first_arg
+        when String
+          pdftk = first_arg
+          options = args.shift || {}
+          raise InvalidArgumentError.new("expected hash, got #{options.class.name}") unless Hash === options
+        when Hash
+          options = first_arg
+        else
+          raise InvalidArgumentError.new("expected string or hash, got #{first_arg.class.name}")
+        end
+      end
+      [pdftk, options]
+    end
+
   end
 end
