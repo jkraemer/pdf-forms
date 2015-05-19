@@ -95,6 +95,12 @@ module PdfForms
       call_pdftk(*([primary_file, 'stamp', stamp_file, 'output', output].flatten))
     end
 
+    # applies each page of the stamp PDF to the corresponding page of the input PDF
+    # args: primary_file, stamp_file, output
+    def multistamp(primary_file, stamp_file, output)
+      call_pdftk(*([primary_file, 'multistamp', stamp_file, 'output', output].flatten))
+    end
+
     protected
 
     def data_format(data)

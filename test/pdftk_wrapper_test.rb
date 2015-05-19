@@ -83,6 +83,12 @@ class PdftkWrapperTest < Test::Unit::TestCase
     FileUtils.rm 'output.pdf'
   end
 
+  def test_multistamp_document
+    @pdftk.multistamp 'test/fixtures/one.pdf', 'test/fixtures/stamp.pdf', 'output.pdf'
+    assert File.size('output.pdf') > 0
+    FileUtils.rm 'output.pdf'
+  end
+
   def data_format
     nil
   end
