@@ -1,7 +1,7 @@
 # coding: utf-8
 
 require 'test_helper'
-class PdftkWrapperTest < Test::Unit::TestCase
+class PdftkWrapperTest < Minitest::Test
 
   def setup
     @pdftk = PdfForms.new 'pdftk', :data_format => data_format

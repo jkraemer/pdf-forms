@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class FdfTest < Test::Unit::TestCase
+class FdfTest < Minitest::Test
   def test_fdf_generation
     fdf = PdfForms::Fdf.new :field1 => 'fieldvalue1', :other_field => 'some other value'
     assert fdf_text = fdf.to_fdf

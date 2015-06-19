@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class PdfTest < Test::Unit::TestCase
+class PdfTest < Minitest::Test
 
   def setup
     @pdftk = PdfForms::PdftkWrapper.new 'pdftk'

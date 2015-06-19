@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class FieldTest < Test::Unit::TestCase
+class FieldTest < Minitest::Test
 
   def setup
   end
