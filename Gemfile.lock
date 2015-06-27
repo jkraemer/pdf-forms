@@ -19,6 +19,3 @@ DEPENDENCIES
   minitest
   pdf-forms!
   rake (~> 10.0)
-
-BUNDLED WITH
-   1.10.4

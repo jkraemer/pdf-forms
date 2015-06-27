@@ -49,10 +49,8 @@ module PdfForms
     end
 
     def quote(value)
-      value.to_s.strip.
-        gsub( /\\/, '\\' ).
-        gsub( /\(/, '\(' ).
-        gsub( /\)/, '\)' ).
+      value.to_s.
+        gsub( /(\\|\(|\))/ ) { '\\' + $1 }.
         gsub( /\n/, '\r' )
     end
 
