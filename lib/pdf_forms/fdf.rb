@@ -12,7 +12,7 @@ module PdfForms
       super
     end
 
-    protected
+    private
 
     def encode_data(fdf)
       # I have yet to see a version of pdftk which can handle UTF8 input,

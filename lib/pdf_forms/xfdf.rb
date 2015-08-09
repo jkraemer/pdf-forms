@@ -7,7 +7,7 @@ module PdfForms
       super
     end
 
-    protected
+    private
 
     def encode_data(pdf_data)
       pdf_data

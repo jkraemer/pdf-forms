@@ -38,7 +38,8 @@ module PdfForms
       (File.open(path, 'wb') << to_fdf).close
     end
 
-    protected
+    private
+
     def encode_data(data)
       data
     end

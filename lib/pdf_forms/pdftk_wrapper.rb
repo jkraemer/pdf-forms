@@ -107,7 +107,7 @@ module PdfForms
       call_pdftk primary_file, 'multistamp', stamp_file, 'output', output
     end
 
-    protected
+    private
 
     def data_format(data)
       data_format = options[:data_format] || 'Fdf'

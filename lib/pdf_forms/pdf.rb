@@ -28,7 +28,7 @@ module PdfForms
       fields.detect{ |f| f.name == name }
     end
 
-    protected
+    private
 
     def read_fields
       dump_method = options[:utf8_fields] ? 'dump_data_fields_utf8' : 'dump_data_fields'
