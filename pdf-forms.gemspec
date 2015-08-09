@@ -1,4 +1,5 @@
-# -*- coding: iso-8859-1 -*-
+# coding: UTF-8
+
 require File.expand_path("../lib/pdf_forms/version", __FILE__)
 
 Gem::Specification.new do |s|
@@ -19,6 +20,7 @@ Gem::Specification.new do |s|
 
   # If you have other dependencies, add them here
   s.add_dependency "cliver", "~> 0.3.2"
+  s.add_dependency "safe_shell", "~> 1.0"
   s.add_development_dependency 'bundler', '>= 1.7'
   s.add_development_dependency 'rake', '~> 10.0'
 

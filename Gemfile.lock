@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    pdf-forms (0.6.0)
+    pdf-forms (0.6.1)
       cliver (~> 0.3.2)
+      safe_shell (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -10,6 +11,7 @@ GEM
     cliver (0.3.2)
     minitest (5.7.0)
     rake (10.4.2)
+    safe_shell (1.0.2)
 
 PLATFORMS
   ruby
@@ -19,3 +21,6 @@ DEPENDENCIES
   minitest
   pdf-forms!
   rake (~> 10.0)
+
+BUNDLED WITH
+   1.10.6

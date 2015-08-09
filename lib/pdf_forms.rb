@@ -1,7 +1,7 @@
 # coding: UTF-8
 
 require 'pdf_forms/version'
-require 'pdf_forms/safe_path'
+require 'pdf_forms/normalize_path'
 require 'pdf_forms/data_format'
 require 'pdf_forms/fdf'
 require 'pdf_forms/xfdf'

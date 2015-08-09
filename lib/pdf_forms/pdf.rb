@@ -4,14 +4,13 @@ require 'pdf_forms/field'
 
 module PdfForms
   class Pdf
-
-    include SafePath
+    include NormalizePath
 
     attr_reader :path, :options
 
     def initialize(path, pdftk, options = {})
       @options = options
-      @path = file_path(path)
+      @path = normalize_path(path)
       raise IOError unless File.readable?(@path)
       @pdftk = pdftk
     end
@@ -33,7 +32,7 @@ module PdfForms
 
     def read_fields
       dump_method = options[:utf8_fields] ? 'dump_data_fields_utf8' : 'dump_data_fields'
-      field_output = @pdftk.call_pdftk quote_path(path), dump_method
+      field_output = @pdftk.call_pdftk path, dump_method
       @fields = field_output.split(/^---\n/).map do |field_text|
         Field.new field_text if field_text =~ /FieldName:/
       end.compact

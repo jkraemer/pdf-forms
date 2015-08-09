@@ -44,6 +44,12 @@ class PdftkWrapperTest < Minitest::Test
     FileUtils.rm 'output.pdf'
   end
 
+  def test_fill_form_spaced_filename
+    @pdftk.fill_form 'test/fixtures/form.pdf', 'out put.pdf', 'program_name' => 'SOME TEXT'
+    assert File.size('out put.pdf') > 0
+    FileUtils.rm 'out put.pdf'
+  end
+
   def test_fill_form_and_flatten
     @pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf',
       {'program_name' => 'SOME TEXT'}, {:flatten => true}
@@ -87,6 +93,14 @@ class PdftkWrapperTest < Minitest::Test
     @pdftk.multistamp 'test/fixtures/one.pdf', 'test/fixtures/stamp.pdf', 'output.pdf'
     assert File.size('output.pdf') > 0
     FileUtils.rm 'output.pdf'
+  end
+
+  def test_fill_form_cli_injection
+    @pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf"; touch "test/cli_injection', 'program_name' => 'SOME TEXT' rescue nil
+    refute File.exist?('test/cli_injection'), "CLI injection successful"
+  ensure
+    FileUtils.rm 'output.pdf' if File.exist?('output.pdf')
+    FileUtils.rm 'test/cli_injection' if File.exist?('test/cli_injection')
   end
 
   def data_format

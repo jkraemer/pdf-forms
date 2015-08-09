@@ -2,6 +2,7 @@
 
 require 'tempfile'
 require 'cliver'
+require 'safe_shell'
 
 module PdfForms
   class PdftkError < StandardError
@@ -10,7 +11,7 @@ module PdfForms
   # Wraps calls to PdfTk
   class PdftkWrapper
 
-    include SafePath
+    include NormalizePath
 
     attr_reader :pdftk, :options
 
@@ -24,21 +25,24 @@ module PdfForms
     def initialize(*args)
       pdftk, options = normalize_args *args
       @pdftk = Cliver.detect! pdftk
-      raise "pdftk executable #{@pdftk} not found" unless call_pdftk('-h') =~ /pdftk\s+\d/i
+      raise "pdftk executable #{@pdftk} not found" unless call_pdftk('-h') && $?.success?
       @options = options
     end
 
     # pdftk.fill_form '/path/to/form.pdf', '/path/to/destination.pdf', :field1 => 'value 1'
     def fill_form(template, destination, data = {}, fill_options = {})
-      q_template = safe_path(template)
-      q_destination = safe_path(destination)
+      q_template = normalize_path(template)
+      q_destination = normalize_path(destination)
       fdf = data_format(data)
       tmp = Tempfile.new('pdf_forms-fdf')
       tmp.close
       fdf.save_to tmp.path
       fill_options = {:tmp_path => tmp.path}.merge(fill_options)
-      command = pdftk_command q_template, 'fill_form', safe_path(tmp.path), 'output', q_destination, add_options(fill_options)
-      output = %x{#{command}}
+
+      args = [ q_template, 'fill_form', normalize_path(tmp.path), 'output', q_destination ]
+      append_options args, fill_options
+      result = call_pdftk *args
+
       unless File.readable?(destination) && File.size(destination) > 0
         fdf_path = nil
         begin
@@ -47,7 +51,7 @@ module PdfForms
         rescue Exception
           fdf_path = "#{$!}\n#{$!.backtrace.join("\n")}"
         end
-        raise PdftkError.new("failed to fill form with command\n#{command}\ncommand output was:\n#{output}\nfailing form data has been saved to #{fdf_path}")
+        raise PdftkError.new("failed to fill form with command\n#{pdftk} #{args.flatten.compact.join ' '}\ncommand output was:\n#{result}\nfailing form data has been saved to #{fdf_path}")
       end
     ensure
       tmp.unlink if tmp
@@ -75,30 +79,32 @@ module PdfForms
       read(template).fields.map{|f| f.name}
     end
 
+    # returns the commands output, check general execution success with
+    # $?.success?
     def call_pdftk(*args)
-      %x{#{pdftk_command args}}
+      SafeShell.execute pdftk, *(args.flatten)
     end
 
     # concatenate documents
     #
     # args: in_file1, in_file2, ... , in_file_n, output
     def cat(*args)
-      arguments = args.flatten.compact.map{|path| safe_path(path)}
+      arguments = args.flatten.compact.map{|path| normalize_path(path)}
       output = arguments.pop
-      call_pdftk(*([arguments, 'output', output].flatten))
+      call_pdftk arguments, 'output', output
     end
 
     # stamp one pdf with another
     #
     # args: primary_file, stamp_file, output
     def stamp(primary_file, stamp_file, output)
-      call_pdftk(*([primary_file, 'stamp', stamp_file, 'output', output].flatten))
+      call_pdftk primary_file, 'stamp', stamp_file, 'output', output
     end
 
     # applies each page of the stamp PDF to the corresponding page of the input PDF
     # args: primary_file, stamp_file, output
     def multistamp(primary_file, stamp_file, output)
-      call_pdftk(*([primary_file, 'multistamp', stamp_file, 'output', output].flatten))
+      call_pdftk primary_file, 'multistamp', stamp_file, 'output', output
     end
 
     protected
@@ -108,27 +114,22 @@ module PdfForms
       PdfForms.const_get(data_format).new(data)
     end
 
-    def pdftk_command(*args)
-      quote_path(pdftk) + " #{args.flatten.compact.join ' '} 2>&1"
-    end
-
     def option_or_global(attrib, local = {})
       local[attrib] || options[attrib]
     end
 
-    def add_options(local_options = {})
+    def append_options(args, local_options = {})
       return if options.empty? && local_options.empty?
-      opt_args = []
       if option_or_global(:flatten, local_options)
-        opt_args << 'flatten'
+        args << 'flatten'
       end
       if option_or_global(:encrypt, local_options)
         encrypt_pass = option_or_global(:encrypt_password, local_options)
         encrypt_pass ||= option_or_global(:tmp_path, local_options)
         encrypt_options = option_or_global(:encrypt_options, local_options)
-        opt_args.concat ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options]
+        args += ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options].flatten.compact
       end
-      opt_args
+      args
     end
 
     def normalize_args(*args)
