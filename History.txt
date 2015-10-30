@@ -1,3 +1,9 @@
+== 1.0.0 2015-10-30
+
+* require the latest non-forking and thus JRuby-compatible version of SafeShell
+* add jruby as a test environment to travis.yml
+* dropped Ruby 1.9 support (due to SafeShell)
+
 == 0.6.1 2015-08-09
 
 * safe command execution to avoid possible shell injection
