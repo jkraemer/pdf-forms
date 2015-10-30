@@ -3,7 +3,7 @@ PATH
   specs:
     pdf-forms (0.6.1)
       cliver (~> 0.3.2)
-      safe_shell (~> 1.0)
+      safe_shell (>= 1.0.3, < 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -11,7 +11,7 @@ GEM
     cliver (0.3.2)
     minitest (5.7.0)
     rake (10.4.2)
-    safe_shell (1.0.2)
+    safe_shell (1.0.3)
 
 PLATFORMS
   ruby
