@@ -83,6 +83,12 @@ class PdftkWrapperTest < Minitest::Test
     FileUtils.rm 'output.pdf'
   end
 
+  def test_cat_documents_page_ranges
+    @pdftk.cat({'test/fixtures/form.pdf' => ["1-2", "4-5"]}, 'test/fixtures/one.pdf', {'test/fixtures/two.pdf' => ["1"]}, 'output.pdf')
+    assert File.size('output.pdf') > 0
+    FileUtils.rm 'output.pdf'
+  end
+
   def test_stamp_document
     @pdftk.stamp 'test/fixtures/one.pdf', 'test/fixtures/stamp.pdf', 'output.pdf'
     assert File.size('output.pdf') > 0

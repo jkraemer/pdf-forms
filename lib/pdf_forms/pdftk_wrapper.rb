@@ -85,13 +85,28 @@ module PdfForms
       SafeShell.execute pdftk, *(args.flatten)
     end
 
-    # concatenate documents
+    # concatenate documents, can optionally specify page ranges
     #
-    # args: in_file1, in_file2, ... , in_file_n, output
+    # args: in_file1, {in_file2 => ["1-2", "4-10"]}, ... , in_file_n, output
     def cat(*args)
-      arguments = args.flatten.compact.map{|path| normalize_path(path)}
-      output = arguments.pop
-      call_pdftk arguments, 'output', output
+      in_files = []
+      page_ranges = []
+      file_handle = "A"
+      output = normalize_path args.pop
+
+      args.flatten.compact.each do |in_file|
+        if in_file.is_a? Hash
+          path = in_file.keys.first
+          page_ranges.push *in_file.values.first.map {|range| "#{file_handle}#{range}"}
+        else
+          path = in_file
+          page_ranges.push "#{file_handle}"
+        end
+        in_files.push "#{file_handle}=#{normalize_path(path)}"
+        file_handle.next!
+      end
+
+      call_pdftk in_files, 'cat', page_ranges, 'output', output
     end
 
     # stamp one pdf with another
