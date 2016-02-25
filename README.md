@@ -11,7 +11,6 @@ Fill out PDF forms with [pdftk](http://www.pdflabs.com/tools/pdftk-server/).
 You'll need a working `pdftk` binary. Either get a binary package from
 http://www.pdflabs.com/tools/pdftk-server/ and install it, or run
 `apt-get install pdftk` if you're on Debian or similar.
-[Homebrew Cask](http://caskroom.io) also has a pftk formula.
 
 After that, add `pdf-forms` to your Gemfile or manually install the gem. Nothing
 unusual here.
