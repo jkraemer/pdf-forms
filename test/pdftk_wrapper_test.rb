@@ -5,7 +5,7 @@ class PdftkWrapperTest < Minitest::Test
 
   def setup
     @pdftk = PdfForms.new 'pdftk', :data_format => data_format
-    @pdftk_utf8 = PdfForms.new 'pdftk', utf8_fields: true
+    @pdftk_utf8 = PdfForms.new 'pdftk', utf8_fields: true, data_format: data_format
     @pdftk_options = PdfForms.new :flatten => true, :encrypt => true, :data_format => data_format
     @pdftk_with_encrypt_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true, :data_format => data_format, :encrypt_options => 'allow printing'
   end
