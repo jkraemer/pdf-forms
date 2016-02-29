@@ -1,5 +1,7 @@
 # coding: UTF-8
 
+require 'rexml/document'
+
 module PdfForms
   # Map keys and values to Adobe's XFDF format.
   class XFdf < DataFormat
@@ -14,7 +16,6 @@ module PdfForms
     end
 
     def quote(value)
-      require 'rexml/document'
       REXML::Text.new(value.to_s).to_s
     end
 

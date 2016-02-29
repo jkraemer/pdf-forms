@@ -2,6 +2,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :test do
-  gem 'minitest'
-end
+gem 'minitest'
+gem 'htmlentities'
+gem 'byebug'
