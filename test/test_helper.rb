@@ -1,6 +1,9 @@
 # coding: UTF-8
 
-require 'byebug'
+unless defined? JRUBY_VERSION
+  require 'byebug'
+end
+
 require 'pdf_forms'
 require 'minitest/autorun'
 
