@@ -4,4 +4,4 @@ gemspec
 
 gem 'minitest'
 gem 'htmlentities'
-gem 'byebug'
+gem 'byebug', platforms: :mri
