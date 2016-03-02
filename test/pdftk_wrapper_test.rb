@@ -7,7 +7,7 @@ class PdftkWrapperTest < Minitest::Test
     @pdftk = PdfForms.new 'pdftk', :data_format => data_format
     @pdftk_utf8 = PdfForms.new 'pdftk', utf8_fields: true, data_format: data_format
     @pdftk_options = PdfForms.new :flatten => true, :encrypt => true, :data_format => data_format
-    @pdftk_with_encrypt_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true, :data_format => data_format, :encrypt_options => 'allow printing'
+    @pdftk_with_encrypt_options = PdfForms.new 'pdftk', :flatten => true, :encrypt => true, :data_format => data_format, :encrypt_password => 'secret', :encrypt_options => 'allow printing'
   end
 
   def test_should_check_executable
@@ -62,12 +62,16 @@ class PdftkWrapperTest < Minitest::Test
   def test_fill_form_encrypted_and_flattened
     @pdftk_options.fill_form 'test/fixtures/form.pdf', 'output.pdf', 'program_name' => 'SOME TEXT'
     assert File.size('output.pdf') > 0
+    assert @pdftk.get_fields('output.pdf').size == 0
     FileUtils.rm 'output.pdf'
   end
 
-  def test_fill_form_encrypted_and_flattened_with_encrypt_options
-    @pdftk_with_encrypt_options.fill_form 'test/fixtures/form.pdf', 'output.pdf', 'program_name' => 'SOME TEXT'
+  def test_fill_form_and_encrypt_for_opening
+    pdftk = PdfForms.new 'pdftk', :encrypt => true, :encrypt_password => 'secret', :encrypt_options => 'allow printing user_pw baz'
+    pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf', 'program_name' => 'SOME TEXT'
     assert File.size('output.pdf') > 0
+    output = `pdftk output.pdf dump_data_fields 2>&1`
+    assert_match /OWNER OR USER PASSWORD REQUIRED/, output
     FileUtils.rm 'output.pdf'
   end
 

@@ -40,8 +40,7 @@ module PdfForms
       fill_options = {:tmp_path => tmp.path}.merge(fill_options)
 
       args = [ q_template, 'fill_form', normalize_path(tmp.path), 'output', q_destination ]
-      append_options args, fill_options
-      result = call_pdftk *args
+      result = call_pdftk(*(append_options(args, fill_options)))
 
       unless File.readable?(destination) && File.size(destination) > 0
         fdf_path = nil
@@ -134,7 +133,8 @@ module PdfForms
     end
 
     def append_options(args, local_options = {})
-      return if options.empty? && local_options.empty?
+      return args if options.empty? && local_options.empty?
+      args = args.dup
       if option_or_global(:flatten, local_options)
         args << 'flatten'
       end
@@ -142,8 +142,11 @@ module PdfForms
         encrypt_pass = option_or_global(:encrypt_password, local_options)
         encrypt_pass ||= option_or_global(:tmp_path, local_options)
         encrypt_options = option_or_global(:encrypt_options, local_options)
-        args += ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options].flatten.compact
+        encrypt_options = encrypt_options.split if String === encrypt_options
+        args << ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options]
       end
+      args.flatten!
+      args.compact!
       args
     end
 
