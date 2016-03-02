@@ -53,7 +53,18 @@ pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
 
 # optionally, add the :flatten option to prevent editing of a filled out form
 pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {:foo => 'bar'}, :flatten => true
+
+# to enable PDF encryption, pass encrypt: true. By default, a random 'owner
+# password' will be used, but you can also set one with the :encrypt_pw option.
+pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {foo: 'bar'}, encrypt: true, encrypt_options: 'allow printing'
+
+# you can also protect the PDF even from opening by specifying an additional user_pw option:
+pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {foo: 'bar'}, encrypt: true, encrypt_options: 'user_pw secret'
 ```
+
+Any options shown above can also be set when initializing the PdfForms
+instance. In this case, options given to `fill_form` will override the global
+options.
 
 ### Prior Art
 

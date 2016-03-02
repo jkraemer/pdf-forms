@@ -3,6 +3,7 @@
 require 'tempfile'
 require 'cliver'
 require 'safe_shell'
+require 'securerandom'
 
 module PdfForms
   class PdftkError < StandardError
@@ -140,7 +141,7 @@ module PdfForms
       end
       if option_or_global(:encrypt, local_options)
         encrypt_pass = option_or_global(:encrypt_password, local_options)
-        encrypt_pass ||= option_or_global(:tmp_path, local_options)
+        encrypt_pass ||= SecureRandom.urlsafe_base64
         encrypt_options = option_or_global(:encrypt_options, local_options)
         encrypt_options = encrypt_options.split if String === encrypt_options
         args << ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options]
