@@ -50,5 +50,15 @@ END
     assert_equal 'BarTown', f.bar
   end
 
-end
+  VALUE_WITH_COLON = <<-END
+FieldType: Text
+FieldName: Date
+FieldNameAlt: Date: most recent
+END
 
+  def test_field_values_with_colons
+    f = PdfForms::Field.new VALUE_WITH_COLON
+    assert_equal 'Date: most recent', f.name_alt
+  end
+
+end

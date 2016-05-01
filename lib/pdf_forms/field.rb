@@ -17,7 +17,7 @@ module PdfForms
           (@options ||= []) << $1
         else
           line.strip!
-          key, value = line.split(": ")
+          key, value = line.split(": ", 2)
           key.gsub!(/Field/, "")
           key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
           
