@@ -61,4 +61,25 @@ END
     assert_equal 'Date: most recent', f.name_alt
   end
 
+MULTILINE_TEXT_VALUE = <<-END
+1. First element of my list;
+2. Second element of my list;
+3. Third element of my list.
+
+This is my list.
+END
+MULTILINE_TEXT_FIELD = <<-END
+FieldType: Text
+FieldName: minhalista
+FieldFlags: 4096
+FieldValue: #{MULTILINE_TEXT_VALUE}
+FieldJustification: Left
+END
+
+  def test_text_field_with_multiple_lines
+    f = PdfForms::Field.new MULTILINE_TEXT_FIELD
+    assert_equal MULTILINE_TEXT_VALUE, f.value
+  end
+
+
 end

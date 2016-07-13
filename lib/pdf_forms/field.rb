@@ -11,6 +11,7 @@ module PdfForms
     #
     # Represenation of a PDF Form Field
     def initialize(field_description)
+      previous_key = nil
       field_description.each_line do |line|
         case line
         when /FieldStateOption:\s*(.*?)\s*$/
@@ -18,15 +19,25 @@ module PdfForms
         else
           line.strip!
           key, value = line.split(": ", 2)
-          key.gsub!(/Field/, "")
-          key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
-          
-          instance_variable_set("@#{key}", value)
-          
-          # dynamically add in fields that we didn't anticipate in ATTRS
-          unless self.respond_to?(key.to_sym)
-            proc = Proc.new { instance_variable_get("@#{key}".to_sym) }
-            self.class.send(:define_method, key.to_sym, proc)
+          if not key then key = "" end           # ignore key if line doesn't have a ': '
+          if key.gsub!(/Field/, "")
+            key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
+
+            instance_variable_set("@#{key}", value)
+            
+            # dynamically add in fields that we didn't anticipate in ATTRS
+            unless self.respond_to?(key.to_sym)
+              proc = Proc.new { instance_variable_get("@#{key}".to_sym) }
+              self.class.send(:define_method, key.to_sym, proc)
+            end
+            previous_key = key
+          else
+            # pdftk returns a line that doesn't start with "Field"
+            # It happens when a text field has multiple lines
+            key = previous_key
+            last_value = instance_variable_get("@#{key}")
+            new_value = last_value + "\n" + line # Linux line ending
+            instance_variable_set("@#{key}", new_value)
           end
         end
       end
