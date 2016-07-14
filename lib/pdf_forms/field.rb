@@ -19,8 +19,7 @@ module PdfForms
         else
           line.strip!
           key, value = line.split(": ", 2)
-          if not key then key = "" end           # ignore key if line doesn't have a ': '
-          if key.gsub!(/Field/, "")
+          if key and key.gsub!(/Field/, "")
             key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
 
             instance_variable_set("@#{key}", value)
