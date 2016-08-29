@@ -11,7 +11,7 @@ module PdfForms
     #
     # Represenation of a PDF Form Field
     def initialize(field_description)
-      previous_key = nil
+      last_value = nil
       field_description.each_line do |line|
         case line
         when /FieldStateOption:\s*(.*?)\s*$/
@@ -29,14 +29,11 @@ module PdfForms
               proc = Proc.new { instance_variable_get("@#{key}".to_sym) }
               self.class.send(:define_method, key.to_sym, proc)
             end
-            previous_key = key
+            last_value = value
           else
             # pdftk returns a line that doesn't start with "Field"
             # It happens when a text field has multiple lines
-            key = previous_key
-            last_value = instance_variable_get("@#{key}")
-            new_value = last_value + "\n" + line # Linux line ending
-            instance_variable_set("@#{key}", new_value)
+            last_value << "\n" << line
           end
         end
       end
