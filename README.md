@@ -72,5 +72,5 @@ The FDF generation part is a straight port of Steffen Schwigon's PDF::FDF::Simpl
 
 ## License
 
-Created by [Jens Kraemer](http://jkraemer.net/) and licensed under the MIT Liense.
+Created by [Jens Kraemer](http://jkraemer.net/) and licensed under the MIT License.
 
