@@ -23,7 +23,7 @@ module PdfForms
             key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
 
             instance_variable_set("@#{key}", value)
-            
+
             # dynamically add in fields that we didn't anticipate in ATTRS
             unless self.respond_to?(key.to_sym)
               proc = Proc.new { instance_variable_get("@#{key}".to_sym) }
@@ -31,6 +31,7 @@ module PdfForms
             end
             last_value = value
           else
+
             # pdftk returns a line that doesn't start with "Field"
             # It happens when a text field has multiple lines
             last_value << "\n" << line
@@ -38,13 +39,13 @@ module PdfForms
         end
       end
     end
-    
+
     def to_hash
       hash = {}
       ATTRS.each do |attribute|
         hash[attribute] = self.send(attribute)
       end
-      
+
       hash
     end
 
