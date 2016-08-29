@@ -1,3 +1,8 @@
+== 1.1.0 2016-08-29
+
+* fixed parsing of multiline values (thanks @edusantana)
+* removed the no longer maintained Ruby 2.0 from travis test matrix
+
 == 1.0.0 2015-10-30
 
 * require the latest non-forking and thus JRuby-compatible version of SafeShell
