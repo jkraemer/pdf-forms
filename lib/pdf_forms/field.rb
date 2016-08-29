@@ -9,19 +9,22 @@ module PdfForms
     # FieldStateOption: Ja
     # FieldStateOption: Off
     #
-    # Represenation of a PDF Form Field
+    # Representation of a PDF Form Field
     def initialize(field_description)
       last_value = nil
       field_description.each_line do |line|
-        case line
-        when /FieldStateOption:\s*(.*?)\s*$/
-          (@options ||= []) << $1
-        else
-          line.strip!
-          key, value = line.split(": ", 2)
-          if key and key.gsub!(/Field/, "")
-            key = key.split(/(?=[A-Z])/).map(&:downcase).join('_').split(":")[0]
+        line.chomp!
 
+        if line =~ /^Field([A-Za-z]+):\s+(.*)/
+          _, key, value = *$~
+
+          if key == 'StateOption'
+            (@options ||= []) << value
+
+          else
+            value.chomp!
+            last_value = value
+            key = key.split(/(?=[A-Z])/).map(&:downcase).join('_')
             instance_variable_set("@#{key}", value)
 
             # dynamically add in fields that we didn't anticipate in ATTRS
@@ -29,13 +32,12 @@ module PdfForms
               proc = Proc.new { instance_variable_get("@#{key}".to_sym) }
               self.class.send(:define_method, key.to_sym, proc)
             end
-            last_value = value
-          else
-
-            # pdftk returns a line that doesn't start with "Field"
-            # It happens when a text field has multiple lines
-            last_value << "\n" << line
           end
+
+        else
+          # pdftk returns a line that doesn't start with "Field"
+          # It happens when a text field has multiple lines
+          last_value << "\n" << line
         end
       end
     end
