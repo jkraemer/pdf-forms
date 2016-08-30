@@ -1,5 +1,7 @@
 # coding: UTF-8
 
+require 'pathname'
+
 module PdfForms
 
   module NormalizePath
