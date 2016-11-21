@@ -25,7 +25,7 @@ module PdfForms
 
     def encode_value_as_hex(value)
       value = value.to_s
-      utf_16 = value.encode!('UTF-16BE', :invalid => :replace, :undef => :replace)
+      utf_16 = value.encode('UTF-16BE', :invalid => :replace, :undef => :replace)
       '<FEFF' + utf_16.unpack('H*').first.upcase + '>'
     end
   end
