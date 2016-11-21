@@ -20,4 +20,10 @@ class FdfHexTest < Minitest::Test
     assert fdf_text = fdf.to_fdf
     assert_match '<</T(field1)/V[<FEFF0066006F006F><FEFF006200610072>]>>', fdf_text
   end
+
+  def test_nil
+    fdf = PdfForms::FdfHex.new :field1 => nil
+    assert fdf_text = fdf.to_fdf
+    assert_match '<</T(field1)/V<FEFF>>>', fdf_text
+  end
 end
