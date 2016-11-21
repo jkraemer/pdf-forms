@@ -40,6 +40,9 @@ require 'pdf_forms'
 # add :data_format => 'XFdf' option to generate XFDF instead of FDF when
 # filling a form (XFDF is supposed to have better support for non-western
 # encodings)
+# add :data_format => 'FdfHex' option to generate FDF with values passed in
+# UTF16 hexadecimal format (Hexadecimal format has also proven more reliable
+# for passing latin accented characters to pdftk)
 # add :utf8_fields => true in order to get UTF8 encoded field metadata (this
 # will use dump_data_fields_utf8 instead of dump_data_fields in the call to
 # pdftk)
