@@ -56,7 +56,9 @@ module PdfForms
     ensure
       tmp.unlink if tmp
     end
-
+    def get_fields_utf8(template)
+      read(template).fields_utf8
+    end
     # pdftk.read '/path/to/form.pdf'
     # returns an instance of PdfForms::Pdf representing the given template
     def read(path)
