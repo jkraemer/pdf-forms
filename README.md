@@ -69,6 +69,13 @@ Any options shown above can also be set when initializing the PdfForms
 instance. In this case, options given to `fill_form` will override the global
 options.
 
+### Field names with HTML entities
+
+In case your form's field names contain HTML entities (like
+`Stra&#223;e Hausnummer`), make sure you unescape those before using them, i.e.
+`CGI.unescapeHTML(name)`.  Thanks to @phoet for figuring this out in #65.
+
+
 ### Prior Art
 
 The FDF generation part is a straight port of Steffen Schwigon's PDF::FDF::Simple perl module. Didn't port the FDF parsing, though ;-)
