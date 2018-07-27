@@ -1,3 +1,7 @@
+== 1.1.2 2018-07-26
+
+* fix use of wrong exception class #66
+
 == 1.1.1 2016-08-30
 
 * add missing require for pathname #55
