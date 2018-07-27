@@ -160,11 +160,11 @@ module PdfForms
         when String
           pdftk = first_arg
           options = args.shift || {}
-          raise InvalidArgumentError.new("expected hash, got #{options.class.name}") unless Hash === options
+          raise ArgumentError.new("expected hash, got #{options.class.name}") unless Hash === options
         when Hash
           options = first_arg
         else
-          raise InvalidArgumentError.new("expected string or hash, got #{first_arg.class.name}")
+          raise ArgumentError.new("expected string or hash, got #{first_arg.class.name}")
         end
       end
       [pdftk, options]
