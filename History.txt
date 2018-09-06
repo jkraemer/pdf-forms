@@ -1,3 +1,8 @@
+== 1.2.0 2018-09-06
+
+* added support for drop_xfa and drop_xmp options when filling forms #68
+* fix test case on MacOS #69
+
 == 1.1.2 2018-07-26
 
 * fix use of wrong exception class #66
