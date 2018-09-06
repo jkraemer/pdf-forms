@@ -54,7 +54,8 @@ pdftk.get_field_names 'path/to/form.pdf'
 # take form.pdf, set the 'foo' field to 'bar' and save the document to myform.pdf
 pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', :foo => 'bar'
 
-# optionally, add the :flatten option to prevent editing of a filled out form
+# optionally, add the :flatten option to prevent editing of a filled out form.
+# Other supported options are :drop_xfa and :drop_xmp.
 pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {:foo => 'bar'}, :flatten => true
 
 # to enable PDF encryption, pass encrypt: true. By default, a random 'owner
