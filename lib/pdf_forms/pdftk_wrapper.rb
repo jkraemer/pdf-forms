@@ -23,6 +23,9 @@ module PdfForms
     #
     # The pdftk binary may also be explecitly specified:
     # PdftkWrapper.new('/usr/bin/pdftk', :flatten => true, :encrypt => true, :encrypt_options => 'allow Printing')
+    #
+    # Besides the options shown above, the drop_xfa or drop_xmp options are
+    # also supported.
     def initialize(*args)
       pdftk, options = normalize_args *args
       @pdftk = Cliver.detect! pdftk
@@ -136,8 +139,10 @@ module PdfForms
     def append_options(args, local_options = {})
       return args if options.empty? && local_options.empty?
       args = args.dup
-      if option_or_global(:flatten, local_options)
-        args << 'flatten'
+      %i(flatten drop_xfa drop_xmp).each do |option|
+        if option_or_global(option, local_options)
+          args << option.to_s
+        end
       end
       if option_or_global(:encrypt, local_options)
         encrypt_pass = option_or_global(:encrypt_password, local_options)
