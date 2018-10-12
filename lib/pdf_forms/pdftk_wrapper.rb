@@ -136,10 +136,17 @@ module PdfForms
       local[attrib] || options[attrib]
     end
 
+    ALLOWED_OPTIONS = %i(
+      drop_xmp
+      drop_xfa
+      flatten
+      need_appearances
+    ).freeze
+
     def append_options(args, local_options = {})
       return args if options.empty? && local_options.empty?
       args = args.dup
-      %i(flatten drop_xfa drop_xmp).each do |option|
+      ALLOWED_OPTIONS.each do |option|
         if option_or_global(option, local_options)
           args << option.to_s
         end
