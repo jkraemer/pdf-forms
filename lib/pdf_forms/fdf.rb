@@ -28,6 +28,7 @@ module PdfForms
       end
     end
 
+    # pp 559 https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_archives/PDFReference.pdf
     def header
       header = "%FDF-1.2\n\n1 0 obj\n<<\n/FDF << /Fields 2 0 R"
 
@@ -39,13 +40,16 @@ module PdfForms
       header << "/ID[" << options[:id].join << "]" if options[:id]
 
       header << ">>\n>>\nendobj\n2 0 obj\n["
-      return header
+      header
     end
 
+    # pp 561 https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_archives/PDFReference.pdf
     def field(key, value)
-      "<</T(#{key})/V" +
-        (Array === value ? "[#{value.map{ |v|"(#{quote(v)})" }.join}]" : "(#{quote(value)})") +
-        ">>\n"
+      field = "<<"
+      field << "/T" + "(#{key})"
+      field << "/V" + (Array === value ? "[#{value.map{ |v|"(#{quote(v)})" }.join}]" : "(#{quote(value)})")
+      field << ">>\n"
+      field
     end
 
     def quote(value)
