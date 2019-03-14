@@ -76,6 +76,14 @@ In case your form's field names contain HTML entities (like
 `Stra&#223;e Hausnummer`), make sure you unescape those before using them, i.e.
 `CGI.unescapeHTML(name)`.  Thanks to @phoet for figuring this out in #65.
 
+### Non-ASCII Characters (UTF8 etc) are not displayed in the filled out PDF
+
+First, check if the field value has been stored properly in the output PDF using `pdftk output.pdf dump_data_fields_utf8`.
+
+If it has been stored but is not rendered, your input PDF lacks the proper font for your kind of characters. Re-create it and embed any necessary fonts.
+If the value has not been stored, there is a problem with filling out the form, either on your side, of with this gem.
+
+Also see [UTF-8 chars are not displayed in the filled PDF](https://github.com/jkraemer/pdf-forms/issues/53)
 
 ### Prior Art
 
