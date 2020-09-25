@@ -15,6 +15,31 @@ http://www.pdflabs.com/tools/pdftk-server/ and install it, or run
 After that, add `pdf-forms` to your Gemfile or manually install the gem. Nothing
 unusual here.
 
+### Using the Java port of PDFTK
+
+The PDFTK package was dropped from most (all?) current versions of major Linux distributions.
+As contributed in [this issue](https://github.com/jkraemer/pdf-forms/issues/75#issuecomment-698436643), you can use the [Java version of PDFTK](https://gitlab.com/pdftk-java/pdftk)
+with this gem, as well. Just create a small shell script:
+
+~~~shell
+#!/bin/sh
+MYSELF=`which "$0" 2>/dev/null`
+[ $? -gt 0 -a -f "$0" ] && MYSELF="./$0"
+java=java
+if test -n "$JAVA_HOME"; then
+    java="$JAVA_HOME/bin/java"
+fi
+exec "$java" $java_args -jar $MYSELF "$@"
+exit 1
+~~~
+
+Next, concatenate the wrapper script and the Jar file, and you end up with an executable that 
+can be used with pdf-forms:
+
+~~~
+cat stub.sh pdftk-all.jar > pdftk.run && chmod +x pdftk.run
+~~~
+
 
 ## Usage
 
