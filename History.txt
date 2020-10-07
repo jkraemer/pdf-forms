@@ -1,3 +1,7 @@
+== 1.3.0 2020-10-07
+
+* adds support for need_appearances option (thanks @antoshalee)
+
 == 1.2.0 2018-09-06
 
 * added support for drop_xfa and drop_xmp options when filling forms #68
