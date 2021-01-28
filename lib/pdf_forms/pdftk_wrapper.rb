@@ -85,7 +85,7 @@ module PdfForms
     # returns the commands output, check general execution success with
     # $?.success?
     def call_pdftk(*args)
-      SafeShell.execute pdftk, *(args.flatten)
+      SafeShell.execute! pdftk, *(args.flatten)
     end
 
     # concatenate documents, can optionally specify page ranges
