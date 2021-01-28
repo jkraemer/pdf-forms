@@ -21,8 +21,8 @@ Gem::Specification.new do |s|
   # If you have other dependencies, add them here
   s.add_dependency "cliver", "~> 0.3.2"
   s.add_dependency "safe_shell", [">= 1.0.3", "< 2.0"]
-  s.add_development_dependency 'bundler', '~> 1.7'
-  s.add_development_dependency 'rake', '~> 10.0'
+  s.add_development_dependency 'bundler', '~> 2.1'
+  s.add_development_dependency 'rake', '~> 13.0'
 
   # If you need to check in files that aren't .rb files, add them here
   s.files        = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md", "*.rdoc"]
