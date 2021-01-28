@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["jk@jkraemer.net"]
   s.homepage    = "http://github.com/jkraemer/pdf-forms"
   s.summary     = %q{Fill out PDF forms with pdftk (http://www.accesspdf.com/pdftk/).}
-  s.description = %q{A Ruby frontend to the pdftk binary, including FDF and XFDF creation. Just pass your template and a hash of data to fill in.}
+  s.description = %q{A Ruby frontend to the pdftk binary, including FDF and XFDF creation. Also works with the PDFTK Java port. Just pass your template and a hash of data to fill in.}
   s.licenses    = ['MIT']
 
   s.required_rubygems_version = ">= 1.3.6"
