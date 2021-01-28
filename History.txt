@@ -1,3 +1,7 @@
+== 1.4.0 2021-01-28
+
+* raise an error when pdftk returns with a non-zero exit status (#80)
+
 == 1.3.0 2020-10-07
 
 * adds support for need_appearances option (thanks @antoshalee)
