@@ -71,7 +71,7 @@ class PdftkWrapperTest < Minitest::Test
     pdftk.fill_form 'test/fixtures/form.pdf', 'output.pdf', 'program_name' => 'SOME TEXT'
     assert File.size('output.pdf') > 0
     output = `pdftk output.pdf dump_data_fields 2>&1`
-    assert_match /OWNER (OR USER )?PASSWORD REQUIRED/, output
+    assert_match /(OWNER (OR USER )?PASSWORD REQUIRED|Bad password)/, output
     FileUtils.rm 'output.pdf'
   end
 
