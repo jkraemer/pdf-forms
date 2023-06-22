@@ -158,6 +158,9 @@ module PdfForms
         encrypt_options = encrypt_options.split if String === encrypt_options
         args << ['encrypt_128bit', 'owner_pw', encrypt_pass, encrypt_options]
       end
+      if option_or_global(:replacement_font, local_options)
+        args << ['replacement_font', option_or_global(:replacement_font, local_options)]
+      end
       args.flatten!
       args.compact!
       args

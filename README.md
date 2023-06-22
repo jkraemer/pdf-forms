@@ -89,6 +89,9 @@ pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {foo: 'bar'}, encrypt: true, 
 
 # you can also protect the PDF even from opening by specifying an additional user_pw option:
 pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {foo: 'bar'}, encrypt: true, encrypt_options: 'user_pw secret'
+
+# if you are facing font issues with your pdf, you can specify :replacement_font option:
+pdftk.fill_form '/path/to/form.pdf', 'myform.pdf', {foo: 'bar'}, replacement_font: '/path/to/font'
 ```
 
 Any options shown above can also be set when initializing the PdfForms
@@ -103,7 +106,8 @@ In case your form's field names contain HTML entities (like
 
 ### Non-ASCII Characters (UTF8 etc) are not displayed in the filled out PDF
 
-First, check if the field value has been stored properly in the output PDF using `pdftk output.pdf dump_data_fields_utf8`.
+First, try to use the `replacement_font` option and specify the font that's not being displayed.
+If it doesn't work, check if the field value has been stored properly in the output PDF using `pdftk output.pdf dump_data_fields_utf8`.
 
 If it has been stored but is not rendered, your input PDF lacks the proper font for your kind of characters. Re-create it and embed any necessary fonts.
 If the value has not been stored, there is a problem with filling out the form, either on your side, of with this gem.
