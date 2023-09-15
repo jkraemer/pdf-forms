@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   # If you have other dependencies, add them here
   s.add_dependency "cliver", "~> 0.3.2"
   s.add_dependency "safe_shell", [">= 1.0.3", "< 2.0"]
+  s.add_dependency "rexml", [">= 3.2.6", "~> 3.2"]
   s.add_development_dependency 'bundler', '~> 2.1'
   s.add_development_dependency 'rake', '~> 13.0'
 
