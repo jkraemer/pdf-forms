@@ -2,6 +2,7 @@
 
 * adds support for replacement_font flag (#88) (thanks @tyrro)
 * only raise an error in case of actual errors, not warnings (#86)
+* Ruby 3 compatibility
 
 == 1.4.0 2021-01-28
 
