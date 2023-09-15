@@ -1,3 +1,8 @@
+== 1.5.0 2023-09-15
+
+* adds support for replacement_font flag (#88) (thanks @tyrro)
+* only raise an error in case of actual errors, not warnings (#86)
+
 == 1.4.0 2021-01-28
 
 * raise an error when pdftk returns with a non-zero exit status (#80)
