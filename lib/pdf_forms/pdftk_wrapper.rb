@@ -84,8 +84,20 @@ module PdfForms
 
     # returns the commands output, check general execution success with
     # $?.success?
+    #
+    # The method will throw a PdftkError if pdftk returns with a non-zero exit
+    # code *and* the output contains the word "Error" (case insensitive).
+    #
+    # This is to satisfy both the requirements of not failing silently in case of
+    # PDFtk errors (https://github.com/jkraemer/pdf-forms/issues/80) as well as
+    # tolerating non-zero exit codes that are merely warnings
+    # (https://github.com/jkraemer/pdf-forms/issues/86)
     def call_pdftk(*args)
-      SafeShell.execute! pdftk, *(args.flatten)
+      output = SafeShell.execute pdftk, *(args.flatten)
+      if !$?.success? and output.to_s =~ /Error/i
+        raise PdftkError.new("pdftk failed with command\n#{pdftk} #{args.flatten.compact.join ' '}\ncommand output was:\n#{output}")
+      end
+      return output
     end
 
     # concatenate documents, can optionally specify page ranges
