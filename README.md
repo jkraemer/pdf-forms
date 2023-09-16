@@ -1,4 +1,4 @@
-# pdf-forms [![Build Status](https://travis-ci.org/jkraemer/pdf-forms.png?branch=master)](https://travis-ci.org/jkraemer/pdf-forms)
+# pdf-forms ![Build Status](https://github.com/jkraemer/pdf-forms/actions/workflows/run_tests.yml/badge.svg)
 
 http://github.com/jkraemer/pdf-forms/
 
