@@ -1,3 +1,4 @@
+.tool-versions
 Gemfile.lock
 *.gem
 .rvmrc
