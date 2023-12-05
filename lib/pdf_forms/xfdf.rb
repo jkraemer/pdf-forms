@@ -19,15 +19,19 @@ module PdfForms
       REXML::Text.new(value.to_s).to_s
     end
 
+    def escape(value)
+      Array(value).map{ |v| quote(v) }.join(" ")
+    end
+
     def header
       '<?xml version="1.0" encoding="UTF-8"?>
         <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
           <fields>
       '
     end
-
+    
     def field(key, value)
-      "<field name=\"#{key}\"><value>#{Array(value).map{ |v| quote(v) }.join(" ")}</value></field>"
+      "<field name=\"#{escape(key)}\"><value>#{escape(value)}</value></field>"
     end
 
     def footer
