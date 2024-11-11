@@ -106,7 +106,7 @@ module PdfForms
     def cat(*args)
       in_files = []
       page_ranges = []
-      file_handle = "A"
+      file_handle = +"A"
       output = normalize_path args.pop
 
       args.flatten.compact.each do |in_file|

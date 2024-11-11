@@ -15,7 +15,7 @@ module PdfForms
 
     # generate PDF content in this data format
     def to_pdf_data
-      pdf_data = header
+      pdf_data = +header
 
       @data.each do |key, value|
         if Hash === value

@@ -30,7 +30,7 @@ module PdfForms
 
     # pp 559 https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_archives/PDFReference.pdf
     def header
-      header = "%FDF-1.2\n\n1 0 obj\n<<\n/FDF << /Fields 2 0 R"
+      header = +"%FDF-1.2\n\n1 0 obj\n<<\n/FDF << /Fields 2 0 R"
 
       # /F
       header << "/F (#{options[:file]})" if options[:file]
@@ -45,7 +45,7 @@ module PdfForms
 
     # pp 561 https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_archives/PDFReference.pdf
     def field(key, value)
-      field = "<<"
+      field = +"<<"
       field << "/T" + "(#{key})"
       field << "/V" + (Array === value ? "[#{value.map{ |v|"(#{quote(v)})" }.join}]" : "(#{quote(value)})")
       field << ">>\n"
