@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-require File.expand_path("../lib/pdf_forms/version", __FILE__)
+require File.expand_path("lib/pdf_forms/version", __dir__)
 
 Gem::Specification.new do |s|
   s.name        = "pdf-forms"
