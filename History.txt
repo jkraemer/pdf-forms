@@ -1,3 +1,8 @@
+== 1.5.2 2025-02-22
+
+* Fix compatibility with Ruby 3.3 and 3.4 by handling frozen string literals
+* Update CI to test against Ruby 3.3 and 3.4
+
 == 1.5.1 2024-06-18
 
 * Escape double quotes in field names when generating XFDF (thanks @nbroadbent)
